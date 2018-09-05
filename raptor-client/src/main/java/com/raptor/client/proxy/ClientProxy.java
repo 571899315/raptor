@@ -9,6 +9,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import com.raptor.loadbalancer.Cluster;
+import com.raptor.loadbalancer.HaStrategy;
+import com.raptor.loadbalancer.LoadBalance;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.util.StringUtils;
 
@@ -33,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Data
-public abstract class ClientProxy implements FactoryBean<Object>, InvocationHandler {
+public  class ClientProxy implements FactoryBean<Object>, InvocationHandler {
 	private Class<?> type;
 
 	private ServiceDiscovery serviceDiscovery;
@@ -45,10 +47,23 @@ public abstract class ClientProxy implements FactoryBean<Object>, InvocationHand
 
 	private ProxyFactory proxyFactory = ExtensionLoader.getExtensionLoader(ProxyFactory.class).getDefaultExtension();
 
+	public ClientProxy( ServiceDiscovery serviceDiscovery) {
+		this.cluster = ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());
+		cluster.setHaStrategy(ExtensionLoader.getExtensionLoader(HaStrategy.class).getExtension(clientConfig.getHaStrategy()));
+		LoadBalance lb = ExtensionLoader.getExtensionLoader(LoadBalance.class).getExtension(clientConfig.getLbStrategy());
+		lb.setRegister(serviceDiscovery);
+		cluster.setLoadBalance(lb);
+	}
+
+
+
+
+
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object getObject() throws Exception {
-		return proxyFactory.getProxy(type, this);
+		return proxyFactory.getProxy(type, new ClientProxy(serviceDiscovery));
 	}
 
 	@Override
@@ -61,7 +76,6 @@ public abstract class ClientProxy implements FactoryBean<Object>, InvocationHand
 		return true;
 	}
 
-	protected abstract Object doInvoke();
 
 //	private Object doInvoke(Object proxy, Method method, Object[] args) throws Throwable {
 //		String targetServiceName = type.getName();
@@ -134,10 +148,12 @@ public abstract class ClientProxy implements FactoryBean<Object>, InvocationHand
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		String targetServiceName = type.getName();
-
 		// Create request
 		RPCRequest request = RPCRequest.builder().requestId(generateRequestId(targetServiceName)).interfaceName(method.getDeclaringClass().getName()).methodName(method.getName()).parameters(args).parameterTypes(method.getParameterTypes()).build();
-
-		return doInvoke();
+		RPCResponse response = cluster.invoke(request,clientConfig);
+		if(response.hasException()){
+			throw response.getException();
+		}
+		return response.getResult();
 	}
 }

@@ -8,8 +8,8 @@ public class HelloClient {
 	public static void main(String[] args) throws Exception {
 
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-		AnotherService anotherService = context.getBean(AnotherService.class);
-		anotherService.callHelloService();
+//		AnotherService anotherService = context.getBean(AnotherService.class);
+//		anotherService.callHelloService();
 
 	}
 }

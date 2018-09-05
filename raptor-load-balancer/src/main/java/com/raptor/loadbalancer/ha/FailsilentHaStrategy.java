@@ -1,28 +1,27 @@
-package com.rpc.rpcx.cluster.ha;
+package com.raptor.loadbalancer.ha;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.raptor.common.config.ClientConfig;
+import com.raptor.common.model.RPCRequest;
+import com.raptor.common.model.RPCResponse;
+import com.raptor.loadbalancer.FailHost;
+import com.raptor.loadbalancer.HaStrategy;
+import com.raptor.loadbalancer.LoadBalance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.rpc.rpcx.cluster.FailHost;
-import com.rpc.rpcx.cluster.HaStrategy;
-import com.rpc.rpcx.cluster.LoadBalance;
-import com.rpc.rpcx.config.ConsumerConfig;
-import com.rpc.rpcx.core.Request;
-import com.rpc.rpcx.core.Response;
-import com.rpc.rpcx.exception.ConnectException;
-import com.rpc.rpcx.exception.ReadException;
+
 
 public class FailsilentHaStrategy implements HaStrategy {
 
 	public static final Logger logger = LoggerFactory.getLogger(FailsilentHaStrategy.class);
 
 	@Override
-	public Response invoke(Request request, ConsumerConfig config, LoadBalance loadBalance) throws Exception {
+	public RPCResponse invoke(RPCRequest request, ClientConfig config, LoadBalance loadBalance) throws Exception {
 		try {
 
 			int tryCount = 1;
@@ -33,7 +32,7 @@ public class FailsilentHaStrategy implements HaStrategy {
 			for (int i = 0; i < tryCount; i++) {
 				try {
 					return loadBalance.invoke(request, config, failHosts);
-				} catch (ReadException | ConnectException e) {
+				} catch (Exception  e) {
 					FailHost host = new FailHost();
 					host.setIp(request.getHost());
 					host.setPort(request.getPort());
@@ -46,17 +45,17 @@ public class FailsilentHaStrategy implements HaStrategy {
 			}
 			return null;
 		} catch (Exception e) {
-			Object obj = config.getMock();
-			if (obj == null) {
-				logger.info("failsilent return null");
-				return null;
-			}
+//			Object obj = config.getMock();
+//			if (obj == null) {
+//				logger.info("failsilent return null");
+//				return null;
+//			}
 
 			try {
 				Class<?> clazz = Class.forName(request.getInterfaceName());
-				Method method = clazz.getMethod(request.getMethod(), request.getParamTypes());
-				Object result = method.invoke(obj, request.getParamValues());
-				Response response = new Response();
+				Method method = clazz.getMethod(request.getMethodName(), request.getParameterTypes());
+				Object result = method.invoke(null, request.getParameters());
+				RPCResponse response = new RPCResponse();
 				response.setResult(result);
 				logger.info("failmock return {}", Objects.toString(result));
 				return response;

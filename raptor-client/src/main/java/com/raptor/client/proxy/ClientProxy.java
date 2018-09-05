@@ -44,9 +44,7 @@ public abstract class ClientProxy implements FactoryBean<Object>, InvocationHand
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object getObject() throws Exception {
-		return proxyFactory.getProxy(type, this);// Proxy.newProxyInstance(type.getClassLoader(),
-													// new Class<?>[]{type},
-													// this::doInvoke);
+		return proxyFactory.getProxy(type, this);
 	}
 
 	@Override

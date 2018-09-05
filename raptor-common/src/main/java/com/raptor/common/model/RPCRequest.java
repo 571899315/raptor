@@ -10,6 +10,9 @@ import lombok.Data;
 @Data
 @Builder
 public class RPCRequest {
+
+	private String host;
+	private int port;
 	private String requestId;
 	private String interfaceName;
 	private String methodName;

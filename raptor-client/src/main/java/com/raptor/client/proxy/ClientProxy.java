@@ -45,9 +45,10 @@ public  class ClientProxy implements FactoryBean<Object>, InvocationHandler {
 
 	private Cluster cluster ;//= ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());;
 
-	private ProxyFactory proxyFactory = ExtensionLoader.getExtensionLoader(ProxyFactory.class).getDefaultExtension();
+	private ProxyFactory proxyFactory ;
 
 	public ClientProxy(){
+		this.proxyFactory =  ExtensionLoader.getExtensionLoader(ProxyFactory.class).getExtension(clientConfig.getProxy());
 		this.cluster = ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());
 		cluster.setHaStrategy(ExtensionLoader.getExtensionLoader(HaStrategy.class).getExtension(clientConfig.getHaStrategy()));
 		LoadBalance lb = ExtensionLoader.getExtensionLoader(LoadBalance.class).getExtension(clientConfig.getLbStrategy());

@@ -54,5 +54,7 @@ public class RaptorConstants {
 	
 	public static final String DefaultMetricsFactory = "default";
 
+	public static final String PROXY="jdk";
+
 	
 }

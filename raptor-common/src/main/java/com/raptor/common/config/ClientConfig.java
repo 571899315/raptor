@@ -25,6 +25,9 @@ public class ClientConfig {
 
 	private String invoker = RaptorConstants.INVOKER_TYPE;
 
+	private String proxy =RaptorConstants.PROXY;
+
+
 
 	private boolean sync = true;
 

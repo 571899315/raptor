@@ -35,6 +35,8 @@ public @interface RaptorService {
 
 	String invoker() default RaptorConstants.INVOKER_TYPE;
 
+	String proxy() default RaptorConstants.PROXY;
+
 	boolean sync() default true;
 
 	boolean localFirst() default false;

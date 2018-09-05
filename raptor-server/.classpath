@@ -1,151 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry output="bin/main" kind="src" path="src/main/java">
+	<classpathentry kind="src" output="bin/main" path="src/main/java">
 		<attributes>
 			<attribute name="gradle_scope" value="main"/>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
-	<classpathentry kind="output" path="bin/default"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>
+	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="src" path="/raptor-registry"/>
 	<classpathentry kind="src" path="/raptor-load-balancer"/>
 	<classpathentry kind="src" path="/raptor-common"/>
 	<classpathentry kind="src" path="/raptor-codec"/>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/io.netty/netty-all/4.0.4.Final/8df8742e1aafd48b9d3e4cb663e9486aee78d41b/netty-all-4.0.4.Final-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/io.netty/netty-all/4.0.4.Final/925914146e37041255ea18ae2d5982f9589c784d/netty-all-4.0.4.Final.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.16.16/c4b112e9645070ac05946084317cc5d01cf4ddcd/lombok-1.16.16-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.16.16/245b50f714bf89ed7659266ace12f9e509d13551/lombok-1.16.16.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.101tec/zkclient/0.4/16ffdff07eb9e4fbb9672c068c060c2ea1b4f0ea/zkclient-0.4-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.101tec/zkclient/0.4/71b48ae0bacac3cb3c4271c76aaf5ee2c13c84df/zkclient-0.4.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.apache.zookeeper/zookeeper/3.4.0/f3034f89def6483724d165ba3b4067512f6b1629/zookeeper-3.4.0-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.apache.zookeeper/zookeeper/3.4.0/134e1bab187c740b3d1bd3f5c1418dfe2884bef4/zookeeper-3.4.0.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-log4j12/1.6.1/7a26b08b265f55622fa1fed3bda68bbd37a465ba/slf4j-log4j12-1.6.1-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-log4j12/1.6.1/bd245d6746cdd4e6203e976e21d597a46f115802/slf4j-log4j12-1.6.1.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.25/962153db4a9ea71b79d047dfd1b2a0d80d8f4739/slf4j-api-1.7.25-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.25/da76ca59f6a57ee3102f8f9bd9cee742973efa8a/slf4j-api-1.7.25.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/4.1.5.RELEASE/6422692bd6d2a1964a7e87efdc4324dfd9d31b76/spring-context-4.1.5.RELEASE-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/4.1.5.RELEASE/483e58e37120c008df917abda73cd81f68d269/spring-context-4.1.5.RELEASE.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.dyuproject.protostuff/protostuff-core/1.0.9/8fdfeb2e00aa2f19dd49edfa764df869c9af08fe/protostuff-core-1.0.9-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.dyuproject.protostuff/protostuff-core/1.0.9/719c603d377bfc668b119757413f37b00ccbe088/protostuff-core-1.0.9.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.dyuproject.protostuff/protostuff-runtime/1.0.9/3e3d95672c75321b5f5c7eeb69eb27192dcab5eb/protostuff-runtime-1.0.9-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.dyuproject.protostuff/protostuff-runtime/1.0.9/a3edadb5e75f3eab0ac9c2b74f93f84a57018a14/protostuff-runtime-1.0.9.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.1/611a57d836e2c320d59f9851d4ad587f3c8472e/objenesis-2.1-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.1/87c0ea803b69252868d09308b4618f766f135a96/objenesis-2.1.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.ecwid.consul/consul-api/1.2.4/5542ef1fd09dbe26625d41ed204085f3dcd5606f/consul-api-1.2.4-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.ecwid.consul/consul-api/1.2.4/b6ac5d2dca489f9cf8569d35a06b0fb5e8e7e233/consul-api-1.2.4.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.springframework/spring-aop/4.1.5.RELEASE/d700da483a20bb615a0c7b7929a740cabe61e9d/spring-aop-4.1.5.RELEASE-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.springframework/spring-aop/4.1.5.RELEASE/f370549f6e84fe25671963c3f1c3f0e90d8b4cac/spring-aop-4.1.5.RELEASE.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.springframework/spring-beans/4.1.5.RELEASE/b86af53a9e63e230c32accc70e7d04c9f1e59dd4/spring-beans-4.1.5.RELEASE-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.springframework/spring-beans/4.1.5.RELEASE/5f82fae5c6359ff883e5e06c2c56169286b7e137/spring-beans-4.1.5.RELEASE.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/4.1.5.RELEASE/29bbac8c24170dd131968c596a8f8c76188afdec/spring-expression-4.1.5.RELEASE-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/4.1.5.RELEASE/e55a83a99260973099833cae425716ecb4b77850/spring-expression-4.1.5.RELEASE.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/4.1.5.RELEASE/8dc34b838a8bed284f8b0990cfa0d193bc9f75b5/spring-core-4.1.5.RELEASE-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/4.1.5.RELEASE/4f9af02bca3066ea0d5ac450332ca210c5de1957/spring-core-4.1.5.RELEASE.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.dyuproject.protostuff/protostuff-collectionschema/1.0.9/ada9a148fe54715930d9a7491dae257b2034c721/protostuff-collectionschema-1.0.9-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.dyuproject.protostuff/protostuff-collectionschema/1.0.9/46185a6123912df8964fd84789c29edae62eea61/protostuff-collectionschema-1.0.9.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.dyuproject.protostuff/protostuff-api/1.0.9/e6f6dcf6fb4ca4352232f871a78d2c24b4291b1c/protostuff-api-1.0.9-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.dyuproject.protostuff/protostuff-api/1.0.9/84df9d42118bb0e22de03bfe4a25b96fffa99cb0/protostuff-api-1.0.9.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/677abe279b68c5e7490d6d50c6951376238d7d3e/log4j-1.2.17-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/5af35056b4d257e4b64b9e8069c0746e8b08629f/log4j-1.2.17.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/jline/jline/0.9.94/7ac7b49164e4f9d250309c70caee645151b87e46/jline-0.9.94-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/jline/jline/0.9.94/99a18e9a44834afdebc467294e1138364c207402/jline-0.9.94.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.jboss.netty/netty/3.2.2.Final/1a9960822301de2d5cf35d4d87e9c6cce1bcf1fd/netty-3.2.2.Final-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.jboss.netty/netty/3.2.2.Final/d4afed2b2038db3f5298da54314575ef194f8bd0/netty-3.2.2.Final.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/21e31b9298ed677b17fcac6dd0eb0a82ec35adc2/gson-2.3-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.2/b9f9e3e5255b6ddc3bf21be05428c7a60d00e042/httpclient-4.5.2-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.2/733db77aa8d9b2d68015189df76ab06304406e50/httpclient-4.5.2.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.5/542498265bc5a238dcb0275172b8070bd51e30af/httpcore-4.4.5-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.5/e7501a1b34325abb00d17dde96150604a0658b54/httpcore-4.4.5.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/4a4b6d692e17846a9f3da036438a7ac491d3c814/aopalliance-1.0-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/235ba8b489512805ac13a8f9ea77a1ca5ebe3e8/aopalliance-1.0.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/ecf26c7507d67782a3bbd148d170b31dfad001aa/commons-logging-1.2-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/4bfc12adfe4842bf07b657f0369c4cb522955686/commons-logging-1.2.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/junit/junit/3.8.1/525753763e53f6f76da052b316d0f2e3bfa4d73/junit-3.8.1-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/junit/junit/3.8.1/99129f16442844f6a4a11ae22fbbee40b14d774f/junit-3.8.1.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.9/3f15fff45d57656685abfee9e8302bf14580044c/commons-codec-1.9-sources.jar" kind="lib" path="C:/Users/i01007600699/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.9/9ce04e34240f674bc72680f8b843b1457383161a/commons-codec-1.9.jar" exported="true">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="output" path="bin/default"/>
 </classpath>

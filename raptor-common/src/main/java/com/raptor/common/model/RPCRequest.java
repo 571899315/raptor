@@ -15,6 +15,9 @@ public class RPCRequest {
 	private int port;
 	private String requestId;
 	private String interfaceName;
+
+	private String version;
+
 	private String methodName;
 	private Class<?>[] parameterTypes;
 	private Object[] parameters;

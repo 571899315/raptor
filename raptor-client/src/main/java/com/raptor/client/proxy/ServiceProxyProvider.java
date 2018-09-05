@@ -19,12 +19,11 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.StringUtils;
 
-import com.raptor.common.annotation.RPCService;
+import com.raptor.common.annotation.RaptorService;
 import com.raptor.common.config.ClientConfig;
 import com.raptor.registry.ServiceDiscovery;
 
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -56,7 +55,7 @@ public class ServiceProxyProvider implements BeanDefinitionRegistryPostProcessor
 	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
 		log.info("register beans");
 		ClassPathScanningCandidateComponentProvider scanner = getScanner();
-		scanner.addIncludeFilter(new AnnotationTypeFilter(RPCService.class));
+		scanner.addIncludeFilter(new AnnotationTypeFilter(RaptorService.class));
 
 		for (String basePackage : getBasePackages()) {
 			Set<BeanDefinition> candidateComponents = scanner.findCandidateComponents(basePackage);
@@ -99,13 +98,13 @@ public class ServiceProxyProvider implements BeanDefinitionRegistryPostProcessor
 	private BeanDefinitionHolder createBeanDefinition(AnnotationMetadata annotationMetadata) {
 		String className = annotationMetadata.getClassName();
 		log.info("Creating bean definition for class: {}", className);
-		BeanDefinitionBuilder definition = BeanDefinitionBuilder.genericBeanDefinition(ProxyFactoryBean.class);
+		BeanDefinitionBuilder definition = BeanDefinitionBuilder.genericBeanDefinition(ClientProxy.class);
 		String beanName = StringUtils.uncapitalize(className.substring(className.lastIndexOf('.') + 1));
 		try {
 			Class<?> clazz = Class.forName(className);
-			boolean annotationPresent = clazz.isAnnotationPresent(RPCService.class);
+			boolean annotationPresent = clazz.isAnnotationPresent(RaptorService.class);
 			if(annotationPresent) {
-				RPCService annotation = clazz.getAnnotation(RPCService.class);
+				RaptorService annotation = clazz.getAnnotation(RaptorService.class);
 				ClientConfig clientConfig = ClientConfig.builder()
 						.cluster(annotation.cluster())
 						.connectTimeoutMillis(annotation.connectTimeoutMillis())

@@ -17,6 +17,8 @@ import com.raptor.client.ResponseFutureManager;
 import com.raptor.common.config.ClientConfig;
 import com.raptor.common.model.RPCRequest;
 import com.raptor.common.model.RPCResponse;
+import com.raptor.common.util.ExtensionLoader;
+import com.raptor.proxy.ProxyFactory;
 import com.raptor.registry.ServiceDiscovery;
 
 import io.netty.channel.Channel;
@@ -27,24 +29,24 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * FactoryBean for service proxy
  *
- * @author hongbin
- * Created on 24/10/2017
  */
 @Slf4j
 @Data
-public class ProxyFactoryBean implements FactoryBean<Object>,InvocationHandler {
+public abstract class ClientProxy implements FactoryBean<Object>, InvocationHandler {
 	private Class<?> type;
 
 	private ServiceDiscovery serviceDiscovery;
 
-	
 	private ClientConfig clientConfig;
-	
-	
+
+	private ProxyFactory proxyFactory = ExtensionLoader.getExtensionLoader(ProxyFactory.class).getDefaultExtension();
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object getObject() throws Exception {
-		return Proxy.newProxyInstance(type.getClassLoader(), new Class<?>[]{type}, this::doInvoke);
+		return proxyFactory.getProxy(type, this);// Proxy.newProxyInstance(type.getClassLoader(),
+													// new Class<?>[]{type},
+													// this::doInvoke);
 	}
 
 	@Override
@@ -57,16 +59,13 @@ public class ProxyFactoryBean implements FactoryBean<Object>,InvocationHandler {
 		return true;
 	}
 
+	protected abstract Object doInvoke();
+
 	private Object doInvoke(Object proxy, Method method, Object[] args) throws Throwable {
 		String targetServiceName = type.getName();
 
 		// Create request
-		RPCRequest request = RPCRequest.builder()
-				.requestId(generateRequestId(targetServiceName))
-				.interfaceName(method.getDeclaringClass().getName())
-				.methodName(method.getName())
-				.parameters(args)
-				.parameterTypes(method.getParameterTypes()).build();
+		RPCRequest request = RPCRequest.builder().requestId(generateRequestId(targetServiceName)).interfaceName(method.getDeclaringClass().getName()).methodName(method.getName()).parameters(args).parameterTypes(method.getParameterTypes()).build();
 
 		// Get service address
 		InetSocketAddress serviceAddress = getServiceAddress(targetServiceName);
@@ -132,7 +131,11 @@ public class ProxyFactoryBean implements FactoryBean<Object>,InvocationHandler {
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-		// TODO Auto-generated method stub
-		return null;
+		String targetServiceName = type.getName();
+
+		// Create request
+		RPCRequest request = RPCRequest.builder().requestId(generateRequestId(targetServiceName)).interfaceName(method.getDeclaringClass().getName()).methodName(method.getName()).parameters(args).parameterTypes(method.getParameterTypes()).build();
+
+		return doInvoke();
 	}
 }

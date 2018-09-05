@@ -14,7 +14,7 @@ import com.raptor.common.config.RaptorConstants;
 @Retention(RetentionPolicy.RUNTIME)
 @Component
 @Inherited
-public @interface RPCService {
+public @interface RaptorService {
 	Class<?> value();
 
 	String contextPath() default RaptorConstants.CONTEXT_PATH;

@@ -12,9 +12,14 @@ import java.util.ArrayList;
  * @author hongbin
  * Created on 21/10/2017
  */
-public class ConsulServiceRegistry implements ServiceRegistry {
+public class ConsulServiceRegistry   implements ServiceRegistry {
 
 	private ConsulClient consulClient;
+
+
+
+
+
 
 	public ConsulServiceRegistry(String consulAddress) {
 		String address[] = consulAddress.split(":");
@@ -38,6 +43,12 @@ public class ConsulServiceRegistry implements ServiceRegistry {
 		newService.setCheck(check);
 		consulClient.agentServiceRegister(newService);
 	}
+
+
+
+
+
+
 
 	private String generateNewIdForService(String serviceName, ServiceAddress serviceAddress){
 		// serviceName + ip + port

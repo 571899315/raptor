@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import com.raptor.loadbalancer.Cluster;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.util.StringUtils;
 
@@ -38,6 +39,9 @@ public abstract class ClientProxy implements FactoryBean<Object>, InvocationHand
 	private ServiceDiscovery serviceDiscovery;
 
 	private ClientConfig clientConfig;
+
+
+	private Cluster cluster = ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());;
 
 	private ProxyFactory proxyFactory = ExtensionLoader.getExtensionLoader(ProxyFactory.class).getDefaultExtension();
 

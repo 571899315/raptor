@@ -135,7 +135,7 @@ public class ExtensionLoader<T> {
 	}
 
 	public T getDefaultExtension() {
-		getExtensionClasses();
+		getExtensionClasses()
 		if (null == cachedDefaultName || cachedDefaultName.length() == 0 || "true".equals(cachedDefaultName)) {
 			return null;
 		}

@@ -19,7 +19,7 @@ import com.raptor.common.annotation.SPI;
 //@Slf4j
 public class ExtensionLoader<T> {
 
-	private static final String rpcx_DIRECTORY = "META-INF/rpcx/";
+	private static final String rpcx_DIRECTORY = "raptor";
 
 	private static final Pattern NAME_SEPARATOR = Pattern.compile("\\s*[,]+\\s*");
 

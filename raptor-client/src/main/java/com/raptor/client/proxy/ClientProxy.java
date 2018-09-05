@@ -43,11 +43,11 @@ public  class ClientProxy implements FactoryBean<Object>, InvocationHandler {
 	private ClientConfig clientConfig;
 
 
-	private Cluster cluster = ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());;
+	private Cluster cluster ;//= ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());;
 
 	private ProxyFactory proxyFactory = ExtensionLoader.getExtensionLoader(ProxyFactory.class).getDefaultExtension();
 
-	public ClientProxy( ServiceDiscovery serviceDiscovery) {
+	public ClientProxy(){
 		this.cluster = ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());
 		cluster.setHaStrategy(ExtensionLoader.getExtensionLoader(HaStrategy.class).getExtension(clientConfig.getHaStrategy()));
 		LoadBalance lb = ExtensionLoader.getExtensionLoader(LoadBalance.class).getExtension(clientConfig.getLbStrategy());
@@ -55,15 +55,9 @@ public  class ClientProxy implements FactoryBean<Object>, InvocationHandler {
 		cluster.setLoadBalance(lb);
 	}
 
-
-
-
-
-
-	@SuppressWarnings("unchecked")
 	@Override
 	public Object getObject() throws Exception {
-		return proxyFactory.getProxy(type, new ClientProxy(serviceDiscovery));
+		return proxyFactory.getProxy(type, this);
 	}
 
 	@Override

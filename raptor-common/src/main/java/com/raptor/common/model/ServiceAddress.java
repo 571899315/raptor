@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class ServiceAddress {
 
 	private String name;
@@ -14,6 +13,11 @@ public class ServiceAddress {
 
 
 	public ServiceAddress() {
+	}
+
+	public ServiceAddress(String ip, int port) {
+		this.ip = ip;
+		this.port = port;
 	}
 
 	@Override

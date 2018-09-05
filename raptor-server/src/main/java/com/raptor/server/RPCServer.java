@@ -35,11 +35,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RPCServer implements ApplicationContextAware, InitializingBean {
 
-    @NonNull
+    //@NonNull
     private String serverIp;
-    @NonNull
+    //@NonNull
     private int serverPort;
-	@NonNull
+	//@NonNull
 	private ServiceRegistry serviceRegistry;
 
 	private Map<String, Object> handlerMap = new HashMap<>();
@@ -48,10 +48,11 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 	
 	
 	
-	public RPCServer(String serverIp, int serverPort) {
+	public RPCServer(String serverIp, int serverPort,ServiceRegistry serviceRegistry) {
 		super();
 		this.serverIp = serverIp;
 		this.serverPort = serverPort;
+		this.serviceRegistry = serviceRegistry;
 	}
 
 	@Override

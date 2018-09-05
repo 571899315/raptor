@@ -1,8 +1,8 @@
 package com.raptor.sample.spi;
 
-import com.raptor.common.annotation.RPCService;
+import com.raptor.common.annotation.RaptorService;
 
-@RPCService(HelloService.class)
+@RaptorService(HelloService.class)
 public interface HelloService {
 
 	String hello(String name);

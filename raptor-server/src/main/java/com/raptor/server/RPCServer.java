@@ -1,11 +1,16 @@
 package com.raptor.server;
 
+import com.raptor.codec.coder.RPCDecoder;
+import com.raptor.codec.coder.RPCEncoder;
+import com.raptor.codec.serialization.impl.ProtobufSerializer;
+import com.raptor.common.annotation.RaptorService;
+import com.raptor.common.model.RPCRequest;
+import com.raptor.common.model.RPCResponse;
+import com.raptor.common.model.ServiceAddress;
+import com.raptor.registry.ServiceRegistry;
+import com.raptor.server.handler.RPCServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -17,22 +22,9 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import com.raptor.codec.coder.RPCEncoder;
-import com.raptor.common.model.RPCRequest;
-import com.raptor.common.model.RPCResponse;
-import com.raptor.codec.serialization.impl.ProtobufSerializer;
-import com.raptor.registry.ServiceRegistry;
-import com.raptor.common.annotation.RPCService;
-import com.raptor.codec.coder.RPCDecoder;
-import com.raptor.common.model.ServiceAddress;
-import com.raptor.server.handler.RPCServerHandler;
 
 import java.lang.annotation.Annotation;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -69,7 +61,7 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 		getServiceInterfaces(ctx)
 				.stream()
 				.forEach(interfaceClazz -> {
-					String serviceName = interfaceClazz.getAnnotation(RPCService.class).value().getName();
+					String serviceName = interfaceClazz.getAnnotation(RaptorService.class).value().getName();
 					Object serviceBean = ctx.getBean(interfaceClazz);
 					handlerMap.put(serviceName, serviceBean);
 					log.debug("Put handler: {}, {}", serviceName, serviceBean);
@@ -127,7 +119,7 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 	}
 
 	private List<Class<?>> getServiceInterfaces(ApplicationContext ctx) {
-		Class<? extends Annotation> clazz = RPCService.class;
+		Class<? extends Annotation> clazz = RaptorService.class;
 		return ctx.getBeansWithAnnotation(clazz)
 				.values().stream()
 				.map(AopUtils::getTargetClass)

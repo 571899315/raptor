@@ -1,0 +1,13 @@
+version '1.0-SNAPSHOT'
+
+dependencies {
+    compile project(':raptor-common')
+    compile project(':raptor-load-balancer')
+
+    provided 'org.projectlombok:lombok'
+    provided 'org.slf4j:slf4j-api'
+    provided 'org.apache.zookeeper:zookeeper'
+    provided 'com.101tec:zkclient'
+    provided 'org.springframework:spring-context'
+    provided 'com.ecwid.consul:consul-api'
+}

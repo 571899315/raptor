@@ -1,0 +1,14 @@
+version '1.0-SNAPSHOT'
+
+dependencies {
+ 	compile project(':raptor-proxy')
+    compile project(':raptor-common')
+    compile project(':raptor-codec')
+    compile project(':raptor-registry')
+	compile project(':raptor-protocol')
+   
+
+    provided 'io.netty:netty-all'
+    provided 'org.projectlombok:lombok'
+    provided 'org.slf4j:slf4j-api'
+}

@@ -1,16 +1,17 @@
-package com.rpc.rpcx.cluster.loadbalance;
+package com.raptor.loadbalancer.loadbalance;
+
+
+import com.raptor.common.config.ClientConfig;
+import com.raptor.common.model.RPCRequest;
+import com.raptor.common.model.RPCResponse;
+import com.raptor.common.model.ServiceAddress;
 
 import java.util.List;
-
-import com.rpc.rpcx.config.ConsumerConfig;
-import com.rpc.rpcx.core.Request;
-import com.rpc.rpcx.core.Response;
-import com.rpc.rpcx.register.ProviderAddress;
 
 public class ConsistentHashLoadBalance extends AbstractLoadBalance {
 
 	@Override
-	public Response doInvoke(Request request, ConsumerConfig config, List<ProviderAddress> addresses) throws Exception {
+	public RPCResponse doInvoke(RPCRequest request, ClientConfig config, List<ServiceAddress> addresses){
 		return null;
 	}
 

@@ -15,7 +15,7 @@ import java.util.List;
 
 public abstract class AbstractLoadBalance implements LoadBalance {
 
-	private ServiceDiscovery serviceDiscovery
+	private ServiceDiscovery serviceDiscovery;
 
 	protected Invoker invoker = ExtensionLoader.getExtensionLoader(Invoker.class).getDefaultExtension();
 

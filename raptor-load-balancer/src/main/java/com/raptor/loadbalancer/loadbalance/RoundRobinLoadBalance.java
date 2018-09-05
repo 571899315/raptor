@@ -1,20 +1,22 @@
-package com.rpc.rpcx.cluster.loadbalance;
+package com.raptor.loadbalancer.loadbalance;
+
+import com.raptor.common.config.ClientConfig;
+import com.raptor.common.model.RPCRequest;
+import com.raptor.common.model.RPCResponse;
+import com.raptor.common.model.ServiceAddress;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.rpc.rpcx.config.ConsumerConfig;
-import com.rpc.rpcx.core.Request;
-import com.rpc.rpcx.core.Response;
-import com.rpc.rpcx.register.ProviderAddress;
+
 
 public class RoundRobinLoadBalance extends AbstractLoadBalance {
 
 	private static final ConcurrentMap<String, AtomicInteger> InterfaceNameServerCyclicCounter = new ConcurrentHashMap<String, AtomicInteger>();
 
-	private int incrementAndGetModulo(Request request, int modulo) {
+	private int incrementAndGetModulo(RPCRequest request, int modulo) {
 		AtomicInteger nextServerCyclicCounter = InterfaceNameServerCyclicCounter
 				.get(request.getInterfaceName() + "_" + request.getVersion());
 		if (nextServerCyclicCounter == null) {
@@ -32,12 +34,12 @@ public class RoundRobinLoadBalance extends AbstractLoadBalance {
 	}
 
 	@Override
-	public Response doInvoke(Request request, ConsumerConfig config, List<ProviderAddress> addresses) throws Exception {
-		ProviderAddress address = null;
+	public RPCResponse doInvoke(RPCRequest request, ClientConfig config, List<ServiceAddress> addresses)throws Exception {
+		ServiceAddress address = null;
 		int upCount = addresses.size();
 		int nextServerIndex = incrementAndGetModulo(request, upCount);
 		address = addresses.get(nextServerIndex);
-		request.setHost(address.getHost());
+		request.setHost(address.getIp());
 		request.setPort(address.getPort());
 		return invoker.invoke(request, config);
 	}

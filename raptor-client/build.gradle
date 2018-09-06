@@ -6,6 +6,7 @@ dependencies {
     compile project(':raptor-codec')
     compile project(':raptor-registry')
     compile project(':raptor-load-balancer')
+    compile project(':raptor-protocol')
 
     provided 'io.netty:netty-all'
     provided 'org.projectlombok:lombok'

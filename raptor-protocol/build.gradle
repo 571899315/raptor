@@ -1,11 +1,7 @@
 version '1.0-SNAPSHOT'
 
 dependencies {
- 	compile project(':raptor-proxy')
     compile project(':raptor-common')
-    compile project(':raptor-codec')
-    compile project(':raptor-registry')
-   	compile project(':raptor-client')
    	compile project(':raptor-load-balancer')
 
     provided 'io.netty:netty-all'

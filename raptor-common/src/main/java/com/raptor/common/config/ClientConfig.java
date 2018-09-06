@@ -1,10 +1,6 @@
 package com.raptor.common.config;
 
-import lombok.Builder;
-import lombok.Data;
 
-@Data
-@Builder
 public class ClientConfig {
 
 	private String contextPath = RaptorConstants.CONTEXT_PATH;
@@ -33,4 +29,99 @@ public class ClientConfig {
 
 	private boolean localFirst = false;
 
+	public String getContextPath() {
+		return contextPath;
+	}
+
+	public void setContextPath(String contextPath) {
+		this.contextPath = contextPath;
+	}
+
+	public int getConnectTimeoutMillis() {
+		return connectTimeoutMillis;
+	}
+
+	public void setConnectTimeoutMillis(int connectTimeoutMillis) {
+		this.connectTimeoutMillis = connectTimeoutMillis;
+	}
+
+	public int getReadTimeoutMillis() {
+		return readTimeoutMillis;
+	}
+
+	public void setReadTimeoutMillis(int readTimeoutMillis) {
+		this.readTimeoutMillis = readTimeoutMillis;
+	}
+
+	public int getRetryCount() {
+		return retryCount;
+	}
+
+	public void setRetryCount(int retryCount) {
+		this.retryCount = retryCount;
+	}
+
+	public String getLbStrategy() {
+		return lbStrategy;
+	}
+
+	public void setLbStrategy(String lbStrategy) {
+		this.lbStrategy = lbStrategy;
+	}
+
+	public String getHaStrategy() {
+		return haStrategy;
+	}
+
+	public void setHaStrategy(String haStrategy) {
+		this.haStrategy = haStrategy;
+	}
+
+	public String getThreadpool() {
+		return threadpool;
+	}
+
+	public void setThreadpool(String threadpool) {
+		this.threadpool = threadpool;
+	}
+
+	public String getCluster() {
+		return cluster;
+	}
+
+	public void setCluster(String cluster) {
+		this.cluster = cluster;
+	}
+
+	public String getInvoker() {
+		return invoker;
+	}
+
+	public void setInvoker(String invoker) {
+		this.invoker = invoker;
+	}
+
+	public String getProxy() {
+		return proxy;
+	}
+
+	public void setProxy(String proxy) {
+		this.proxy = proxy;
+	}
+
+	public boolean isSync() {
+		return sync;
+	}
+
+	public void setSync(boolean sync) {
+		this.sync = sync;
+	}
+
+	public boolean isLocalFirst() {
+		return localFirst;
+	}
+
+	public void setLocalFirst(boolean localFirst) {
+		this.localFirst = localFirst;
+	}
 }

@@ -14,9 +14,8 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
@@ -31,8 +30,6 @@ import java.util.stream.Collectors;
  * @author hongbin
  * Created on 21/10/2017
  */
-@RequiredArgsConstructor
-@Slf4j
 public class RPCServer implements ApplicationContextAware, InitializingBean {
 
     //@NonNull
@@ -44,10 +41,11 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 
 	private Map<String, Object> handlerMap = new HashMap<>();
 
-	
-	
-	
-	
+	private static final Logger log = LoggerFactory.getLogger(RPCServer.class);
+
+
+
+
 	public RPCServer(String serverIp, int serverPort,ServiceRegistry serviceRegistry) {
 		super();
 		this.serverIp = serverIp;

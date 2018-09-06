@@ -3,7 +3,6 @@ package com.raptor.common.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data
 public class ServiceAddress {
 
 	private String name;
@@ -17,6 +16,39 @@ public class ServiceAddress {
 
 	public ServiceAddress(String ip, int port) {
 		this.ip = ip;
+		this.port = port;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
 		this.port = port;
 	}
 

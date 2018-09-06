@@ -1,5 +1,5 @@
 version '1.0-SNAPSHOT'
-
+ apply plugin:  'java'
 dependencies {
     compile project(':raptor-server')
     compile project(':raptor-sample-spi')

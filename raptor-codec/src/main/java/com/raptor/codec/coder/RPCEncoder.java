@@ -10,11 +10,18 @@ import com.raptor.codec.serialization.Serializer;
  * @author hongbin
  * Created on 21/10/2017
  */
-@AllArgsConstructor
 public class RPCEncoder extends MessageToByteEncoder {
 
 	private Class<?> genericClass;
 	private Serializer serializer;
+
+	public RPCEncoder(){}
+
+	public RPCEncoder(Class<?> genericClass,Serializer serializer){
+		this.genericClass = genericClass;
+		this.serializer = serializer;
+	}
+
 
 	@Override
 	public void encode(ChannelHandlerContext ctx, Object in, ByteBuf out) throws Exception {

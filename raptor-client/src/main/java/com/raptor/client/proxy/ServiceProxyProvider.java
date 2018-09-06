@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -32,8 +34,6 @@ import lombok.extern.slf4j.Slf4j;
  * register them
  *
  */
-@Slf4j
-//@RequiredArgsConstructor
 public class ServiceProxyProvider implements BeanDefinitionRegistryPostProcessor {
 
 	@NonNull
@@ -42,9 +42,11 @@ public class ServiceProxyProvider implements BeanDefinitionRegistryPostProcessor
 	
 	@NonNull
 	private String[] basePackages;
-	
-	
-	
+
+
+
+	private static final Logger log = LoggerFactory.getLogger(ServiceProxyProvider.class);
+
 
 	public ServiceProxyProvider(ServiceDiscovery serviceDiscovery, String[] basePackages) {
 		this.serviceDiscovery = serviceDiscovery;
@@ -105,19 +107,18 @@ public class ServiceProxyProvider implements BeanDefinitionRegistryPostProcessor
 			boolean annotationPresent = clazz.isAnnotationPresent(RaptorService.class);
 			if(annotationPresent) {
 				RaptorService annotation = clazz.getAnnotation(RaptorService.class);
-				ClientConfig clientConfig = ClientConfig.builder()
-						.cluster(annotation.cluster())
-						.connectTimeoutMillis(annotation.connectTimeoutMillis())
-						.contextPath(annotation.contextPath())
-						.haStrategy(annotation.haStrategy())
-						.lbStrategy(annotation.lbStrategy())
-						.localFirst(annotation.localFirst())
-						.readTimeoutMillis(annotation.readTimeoutMillis())
-						.retryCount(annotation.retryCount())
-						.sync(annotation.sync())
-						.threadpool(annotation.threadpool())
-						.proxy(annotation.proxy())
-						.build();
+				ClientConfig clientConfig = new ClientConfig();
+				clientConfig.setCluster(annotation.cluster());
+				clientConfig.setConnectTimeoutMillis(annotation.connectTimeoutMillis());
+				clientConfig.setContextPath(annotation.contextPath());
+				clientConfig.setHaStrategy(annotation.haStrategy());
+				clientConfig.setLbStrategy(annotation.lbStrategy());
+				clientConfig.setLocalFirst(annotation.localFirst());
+				clientConfig.setReadTimeoutMillis(annotation.readTimeoutMillis());
+				clientConfig.setRetryCount(annotation.retryCount());
+				clientConfig.setSync(annotation.sync());
+				clientConfig.setThreadpool(annotation.threadpool());
+				clientConfig.setProxy(annotation.proxy());
 				definition.addPropertyValue("clientConfig", clientConfig);
 				
 			}

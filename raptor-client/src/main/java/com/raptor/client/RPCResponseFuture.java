@@ -5,6 +5,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.raptor.common.model.RPCResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -16,9 +18,6 @@ import java.util.concurrent.TimeoutException;
  * @author hongbin
  * Created on 11/11/2017
  */
-@Slf4j
-@Data
-@RequiredArgsConstructor
 public class RPCResponseFuture implements Future<RPCResponse> {
 	@NonNull
 	private String requestId;
@@ -26,6 +25,10 @@ public class RPCResponseFuture implements Future<RPCResponse> {
 	private RPCResponse response;
 
 	private CountDownLatch latch = new CountDownLatch(1);
+
+
+	private static final Logger log = LoggerFactory.getLogger(RPCResponseFuture.class);
+
 
 	public void done(RPCResponse response) {
 		this.response = response;
@@ -67,5 +70,37 @@ public class RPCResponseFuture implements Future<RPCResponse> {
 	@Override
 	public boolean isCancelled() {
 		throw new UnsupportedOperationException();
+	}
+
+	public RPCResponseFuture() {
+	}
+
+	public RPCResponseFuture(String requestId, RPCResponse response) {
+		this.requestId = requestId;
+		this.response = response;
+	}
+
+	public String getRequestId() {
+		return requestId;
+	}
+
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
+	}
+
+	public RPCResponse getResponse() {
+		return response;
+	}
+
+	public void setResponse(RPCResponse response) {
+		this.response = response;
+	}
+
+	public CountDownLatch getLatch() {
+		return latch;
+	}
+
+	public void setLatch(CountDownLatch latch) {
+		this.latch = latch;
 	}
 }

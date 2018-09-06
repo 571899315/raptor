@@ -7,6 +7,8 @@ import com.raptor.common.model.ServiceAddress;
 import com.raptor.registry.RegisterContext;
 import com.raptor.registry.ServiceDiscovery;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
-@Slf4j
 public class ConsulServiceDiscovery implements ServiceDiscovery {
+
+	private static final Logger log = LoggerFactory.getLogger(ConsulServiceDiscovery.class);
+
+
 
 	private ConsulClient consulClient;
 

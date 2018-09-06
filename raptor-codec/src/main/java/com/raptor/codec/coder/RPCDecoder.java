@@ -12,11 +12,19 @@ import java.util.List;
  * @author hongbin
  * Created on 21/10/2017
  */
-@AllArgsConstructor
 public class RPCDecoder extends ByteToMessageDecoder {
 
 	private Class<?> genericClass;
 	private Serializer serializer;
+
+
+	public RPCDecoder() {
+	}
+
+	public RPCDecoder(Class<?> genericClass, Serializer serializer) {
+		this.genericClass = genericClass;
+		this.serializer = serializer;
+	}
 
 	@Override
 	public void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {

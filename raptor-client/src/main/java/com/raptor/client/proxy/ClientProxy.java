@@ -157,7 +157,7 @@ public  class ClientProxy implements FactoryBean<Object> {
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		String targetServiceName = type.getName();
 		// Create request
-		RPCRequest request = RPCRequest.builder().requestId(generateRequestId(targetServiceName)).interfaceName(method.getDeclaringClass().getName()).methodName(method.getName()).parameters(args).parameterTypes(method.getParameterTypes()).build();
+		RPCRequest request = new RPCRequest();//RPCRequest.builder().requestId(generateRequestId(targetServiceName)).interfaceName(method.getDeclaringClass().getName()).methodName(method.getName()).parameters(args).parameterTypes(method.getParameterTypes()).build();
 //		RPCResponse response = cluster.invoke(request,clientConfig);
 //		if(response.hasException()){
 //			throw response.getException();

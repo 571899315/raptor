@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Data
-public  class ClientProxy implements FactoryBean<Object>, InvocationHandler {
+public  class ClientProxy implements FactoryBean<Object> {
 	private Class<?> type;
 
 	private ServiceDiscovery serviceDiscovery;
@@ -43,22 +43,36 @@ public  class ClientProxy implements FactoryBean<Object>, InvocationHandler {
 	private ClientConfig clientConfig;
 
 
-	private Cluster cluster ;//= ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());;
+	//private Cluster cluster ;//= ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());;
 
-	private ProxyFactory proxyFactory ;
+	//private ProxyFactory proxyFactory ;
 
 	public ClientProxy(){
-		this.proxyFactory =  ExtensionLoader.getExtensionLoader(ProxyFactory.class).getExtension(clientConfig.getProxy());
-		this.cluster = ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());
-		cluster.setHaStrategy(ExtensionLoader.getExtensionLoader(HaStrategy.class).getExtension(clientConfig.getHaStrategy()));
-		LoadBalance lb = ExtensionLoader.getExtensionLoader(LoadBalance.class).getExtension(clientConfig.getLbStrategy());
-		lb.setRegister(serviceDiscovery);
-		cluster.setLoadBalance(lb);
+
+		System.out.print("======");
+
+//		ExtensionLoader<ProxyFactory> object  = ExtensionLoader.getExtensionLoader(ProxyFactory.class);
+//
+//		String proxy = clientConfig.getProxy();
+//
+//
+//		Object ob = object.getExtension(clientConfig.getProxy());
+//
+//		System.out.print("======");
+//
+//		//Object call = ExtensionLoader.getExtensionLoader(ProxyFactory.class).getExtension(clientConfig.getProxy());
+//		this.proxyFactory =  ExtensionLoader.getExtensionLoader(ProxyFactory.class).getExtension(clientConfig.getProxy());
+//		this.cluster = ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());
+//		cluster.setHaStrategy(ExtensionLoader.getExtensionLoader(HaStrategy.class).getExtension(clientConfig.getHaStrategy()));
+//		LoadBalance lb = ExtensionLoader.getExtensionLoader(LoadBalance.class).getExtension(clientConfig.getLbStrategy());
+//		lb.setRegister(serviceDiscovery);
+//		cluster.setLoadBalance(lb);
 	}
 
 	@Override
 	public Object getObject() throws Exception {
-		return proxyFactory.getProxy(type, this);
+		//return proxyFactory.getProxy(type, this);
+		return Proxy.newProxyInstance(type.getClassLoader(), new Class<?>[]{type}, this::invoke);
 	}
 
 	@Override
@@ -140,15 +154,14 @@ public  class ClientProxy implements FactoryBean<Object>, InvocationHandler {
 //		}
 //	}
 
-	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		String targetServiceName = type.getName();
 		// Create request
 		RPCRequest request = RPCRequest.builder().requestId(generateRequestId(targetServiceName)).interfaceName(method.getDeclaringClass().getName()).methodName(method.getName()).parameters(args).parameterTypes(method.getParameterTypes()).build();
-		RPCResponse response = cluster.invoke(request,clientConfig);
-		if(response.hasException()){
-			throw response.getException();
-		}
-		return response.getResult();
+//		RPCResponse response = cluster.invoke(request,clientConfig);
+//		if(response.hasException()){
+//			throw response.getException();
+//		}
+		return null;//response.getResult();
 	}
 }

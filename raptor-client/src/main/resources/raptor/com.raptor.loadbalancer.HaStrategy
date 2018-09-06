@@ -1,0 +1,3 @@
+failover=com.raptor.loadbalancer.ha.FailoverHaStrategy
+failfast=com.raptor.loadbalancer.ha.FailfastHaStrategy
+failsilent=com.raptor.loadbalancer.ha.FailsilentHaStrategy

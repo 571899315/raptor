@@ -33,8 +33,6 @@ import lombok.extern.slf4j.Slf4j;
  * FactoryBean for service proxy
  *
  */
-@Slf4j
-@Data
 public  class ClientProxy implements FactoryBean<Object> {
 	private Class<?> type;
 
@@ -43,36 +41,21 @@ public  class ClientProxy implements FactoryBean<Object> {
 	private ClientConfig clientConfig;
 
 
-	//private Cluster cluster ;//= ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());;
+	private Cluster cluster ;
 
-	//private ProxyFactory proxyFactory ;
+	private ProxyFactory proxyFactory ;
 
-	public ClientProxy(){
-
-		System.out.print("======");
-
-//		ExtensionLoader<ProxyFactory> object  = ExtensionLoader.getExtensionLoader(ProxyFactory.class);
-//
-//		String proxy = clientConfig.getProxy();
-//
-//
-//		Object ob = object.getExtension(clientConfig.getProxy());
-//
-//		System.out.print("======");
-//
-//		//Object call = ExtensionLoader.getExtensionLoader(ProxyFactory.class).getExtension(clientConfig.getProxy());
-//		this.proxyFactory =  ExtensionLoader.getExtensionLoader(ProxyFactory.class).getExtension(clientConfig.getProxy());
-//		this.cluster = ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());
-//		cluster.setHaStrategy(ExtensionLoader.getExtensionLoader(HaStrategy.class).getExtension(clientConfig.getHaStrategy()));
-//		LoadBalance lb = ExtensionLoader.getExtensionLoader(LoadBalance.class).getExtension(clientConfig.getLbStrategy());
-//		lb.setRegister(serviceDiscovery);
-//		cluster.setLoadBalance(lb);
-	}
+	public ClientProxy(){}
 
 	@Override
 	public Object getObject() throws Exception {
-		//return proxyFactory.getProxy(type, this);
-		return Proxy.newProxyInstance(type.getClassLoader(), new Class<?>[]{type}, this::invoke);
+		this.proxyFactory =  ExtensionLoader.getExtensionLoader(ProxyFactory.class).getExtension(clientConfig.getProxy());
+		this.cluster = ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clientConfig.getCluster());
+		cluster.setHaStrategy(ExtensionLoader.getExtensionLoader(HaStrategy.class).getExtension(clientConfig.getHaStrategy()));
+		LoadBalance lb = ExtensionLoader.getExtensionLoader(LoadBalance.class).getExtension(clientConfig.getLbStrategy());
+		lb.setRegister(serviceDiscovery);
+		cluster.setLoadBalance(lb);
+		return proxyFactory.getProxy(type, this::invoke);
 	}
 
 	@Override
@@ -163,5 +146,36 @@ public  class ClientProxy implements FactoryBean<Object> {
 //			throw response.getException();
 //		}
 		return null;//response.getResult();
+	}
+
+
+	public ClientProxy(Class<?> type, ServiceDiscovery serviceDiscovery, ClientConfig clientConfig) {
+		this.type = type;
+		this.serviceDiscovery = serviceDiscovery;
+		this.clientConfig = clientConfig;
+	}
+
+	public Class<?> getType() {
+		return type;
+	}
+
+	public void setType(Class<?> type) {
+		this.type = type;
+	}
+
+	public ServiceDiscovery getServiceDiscovery() {
+		return serviceDiscovery;
+	}
+
+	public void setServiceDiscovery(ServiceDiscovery serviceDiscovery) {
+		this.serviceDiscovery = serviceDiscovery;
+	}
+
+	public ClientConfig getClientConfig() {
+		return clientConfig;
+	}
+
+	public void setClientConfig(ClientConfig clientConfig) {
+		this.clientConfig = clientConfig;
 	}
 }

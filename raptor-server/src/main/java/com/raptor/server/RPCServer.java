@@ -61,9 +61,23 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 				.stream()
 				.forEach(interfaceClazz -> {
 					String serviceName = interfaceClazz.getAnnotation(RaptorService.class).value().getName();
-					Object serviceBean = ctx.getBean(interfaceClazz);
-					handlerMap.put(serviceName, serviceBean);
-					log.debug("Put handler: {}, {}", serviceName, serviceBean);
+
+					try{
+						Class<?> clazz = Class.forName(serviceName);
+						boolean annotationPresent = clazz.isAnnotationPresent(RaptorService.class);
+						if(annotationPresent) {
+							RaptorService annotation = clazz.getAnnotation(RaptorService.class);
+							String verson = annotation.version();
+							Object serviceBean = ctx.getBean(interfaceClazz);
+							handlerMap.put(serviceName+"_"+verson, serviceBean);
+							log.debug("Put handler: {}, {}", serviceName, serviceBean);
+						}
+
+
+					}catch (Exception e){
+
+					}
+
 				});
 	}
 
@@ -111,7 +125,11 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 	private void registerServices() {
 		if (serviceRegistry != null) {
 			for (String interfaceName : handlerMap.keySet()) {
-				serviceRegistry.register(interfaceName, new ServiceAddress(serverIp, serverPort));
+				String[] names = interfaceName.split("_");
+				ServiceAddress address = new ServiceAddress(serverIp, serverPort);
+				address.setName(names[0]);
+				address.setVersion(names[1]);
+				serviceRegistry.register(address);
 				log.info("Registering service: {} with address: {}:{}", interfaceName, serverIp, serverPort);
 			}
 		}

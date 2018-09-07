@@ -7,6 +7,7 @@ import com.raptor.common.model.ServiceAddress;
 import com.raptor.registry.ServiceRegistry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author hongbin
@@ -28,15 +29,15 @@ public class ConsulServiceRegistry   implements ServiceRegistry {
 	}
 
 	@Override
-	public void register(String serviceName, ServiceAddress serviceAddress) {
+	public void register(ServiceAddress serviceAddress) {
 		NewService newService = new NewService();
-		newService.setId(generateNewIdForService(serviceName, serviceAddress));
-		newService.setName(serviceName);
-		newService.setTags(new ArrayList<>());
+		newService.setId(generateNewIdForService(serviceAddress.getName(), serviceAddress));
+		newService.setName(serviceAddress.getName());
+		List<String> version = new ArrayList<String>();
+		version.add(serviceAddress.getVersion());
+		newService.setTags(version);
 		newService.setAddress(serviceAddress.getIp());
 		newService.setPort(serviceAddress.getPort());
-
-		// TODO: make check configurable
 		NewService.Check check = new NewService.Check();
 		check.setTcp(serviceAddress.toString());
 		check.setInterval("1s");

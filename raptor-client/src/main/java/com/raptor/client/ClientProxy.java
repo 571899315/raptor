@@ -2,6 +2,7 @@ package com.raptor.client;
 
 import com.raptor.common.config.ClientConfig;
 import com.raptor.common.model.RPCRequest;
+import com.raptor.common.model.RPCResponse;
 import com.raptor.common.util.ExtensionLoader;
 import com.raptor.loadbalancer.Cluster;
 import com.raptor.loadbalancer.HaStrategy;
@@ -123,13 +124,17 @@ public  class ClientProxy implements FactoryBean<Object> {
 
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		String targetServiceName = type.getName();
-		// Create request
-		RPCRequest request = new RPCRequest();//RPCRequest.builder().requestId(generateRequestId(targetServiceName)).interfaceName(method.getDeclaringClass().getName()).methodName(method.getName()).parameters(args).parameterTypes(method.getParameterTypes()).build();
-//		RPCResponse response = cluster.invoke(request,clientConfig);
-//		if(response.hasException()){
-//			throw response.getException();
-//		}
-		return null;//response.getResult();
+		RPCRequest request = new RPCRequest();
+        request.setRequestId(generateRequestId(targetServiceName));
+        request.setInterfaceName(method.getDeclaringClass().getName());
+        request.setMethodName(method.getName());
+        request.setParameters(args);
+        request.setParameterTypes(method.getParameterTypes());
+		RPCResponse response = cluster.invoke(request,clientConfig);
+		if(response.hasException()){
+			throw response.getException();
+		}
+		return response;
 	}
 
 

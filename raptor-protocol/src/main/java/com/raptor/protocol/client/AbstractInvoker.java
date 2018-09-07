@@ -16,10 +16,9 @@ public abstract class AbstractInvoker implements Invoker {
 
 	@Override
 	public RPCResponse invoke(RPCRequest request, ClientConfig config) throws Exception{
-		long start = System.currentTimeMillis();
-		long stop = 0;
-		RPCResponse response = new RPCResponse();
+		RPCResponse response ;
 		try {
+			response = doInvoke(request,config);
 		} catch (Exception e) {
 			throw e;
 		} finally {

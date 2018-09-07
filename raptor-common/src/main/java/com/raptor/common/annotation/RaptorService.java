@@ -17,8 +17,9 @@ import com.raptor.common.config.RaptorConstants;
 public @interface RaptorService {
 	Class<?> value();
 
-	String contextPath() default RaptorConstants.CONTEXT_PATH;
+	String version() default RaptorConstants.LASTEST_VERSION;
 
+	String contextPath() default RaptorConstants.CONTEXT_PATH;
 	int connectTimeoutMillis() default RaptorConstants.DEFAULT_connectTimeoutMillis;
 
 	int readTimeoutMillis() default RaptorConstants.DEFAULT_readTimeoutMillis;

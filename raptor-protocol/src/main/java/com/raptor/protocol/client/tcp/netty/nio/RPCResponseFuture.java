@@ -1,14 +1,16 @@
 package com.raptor.protocol.client.tcp.netty.nio;
 
 import com.raptor.common.model.RPCResponse;
-import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.*;
 
 public class RPCResponseFuture implements Future<RPCResponse> {
-	@NonNull
+
+
+	private static final Logger log = LoggerFactory.getLogger(RPCResponseFuture.class);
+
 	private String requestId;
 
 	private RPCResponse response;
@@ -16,7 +18,6 @@ public class RPCResponseFuture implements Future<RPCResponse> {
 	private CountDownLatch latch = new CountDownLatch(1);
 
 
-	private static final Logger log = LoggerFactory.getLogger(RPCResponseFuture.class);
 
 
 	public void done(RPCResponse response) {

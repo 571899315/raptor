@@ -13,6 +13,8 @@ public class AnotherService {
 
 	public void callHelloService() {
 		System.out.print("call hello service");
+		String hello = helloService.hello("world");
+		System.out.print(hello);
 		System.out.print("Result of callHelloService: {}"+helloService.hello("world"));
 	}
 }

@@ -17,20 +17,18 @@ import java.util.Map;
 /**
  * Handle the RPC request
  *
- * @author hongbin
- * Created on 21/10/2017
+ * @author hongbin Created on 21/10/2017
  */
 public class RPCServerHandler extends SimpleChannelInboundHandler<RPCRequest> {
 
 	private static final Logger log = LoggerFactory.getLogger(RPCServerHandler.class);
 
-
-
 	private Map<String, Object> handlerMap;
 
-	public RPCServerHandler(){}
+	public RPCServerHandler() {
+	}
 
-	public RPCServerHandler(Map<String, Object> handlerMap){
+	public RPCServerHandler(Map<String, Object> handlerMap) {
 		this.handlerMap = handlerMap;
 	}
 
@@ -46,20 +44,20 @@ public class RPCServerHandler extends SimpleChannelInboundHandler<RPCRequest> {
 			log.warn("Get exception when hanlding request, exception: {}", e);
 			response.setException(e);
 		}
-		ctx.writeAndFlush(response).addListener(
-				(ChannelFutureListener) channelFuture -> {
-					log.debug("Sent response for request: {}", request.getRequestId());
-				});
+		ctx.writeAndFlush(response).addListener((ChannelFutureListener) channelFuture -> {
+			log.debug("Sent response for request: {}", request.getRequestId());
+		});
 	}
 
 	private Object handleRequest(RPCRequest request) throws Exception {
+		log.debug("handleRequest begin");
 		// Get service bean
 		String serviceName = request.getInterfaceName();
-		Object serviceBean = handlerMap.get(serviceName);
+		String verson = request.getVersion();
+		Object serviceBean = handlerMap.get(serviceName + "_" + verson);
 		if (serviceBean == null) {
 			throw new RuntimeException(String.format("No service bean available: %s", serviceName));
 		}
-
 		// Invoke by reflect
 		Class<?> serviceClass = serviceBean.getClass();
 		String methodName = request.getMethodName();
@@ -67,6 +65,7 @@ public class RPCServerHandler extends SimpleChannelInboundHandler<RPCRequest> {
 		Object[] parameters = request.getParameters();
 		Method method = serviceClass.getMethod(methodName, parameterTypes);
 		method.setAccessible(true);
+		log.debug("handleRequest end");
 		return method.invoke(serviceBean, parameters);
 	}
 

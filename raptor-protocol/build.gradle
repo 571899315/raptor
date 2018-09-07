@@ -3,6 +3,7 @@ version '1.0-SNAPSHOT'
 dependencies {
     compile project(':raptor-common')
    	compile project(':raptor-load-balancer')
+   	compile project(':raptor-codec')
 
     provided 'io.netty:netty-all'
     provided 'org.projectlombok:lombok'

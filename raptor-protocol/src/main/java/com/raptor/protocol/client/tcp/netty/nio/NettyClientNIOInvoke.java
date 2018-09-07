@@ -58,7 +58,8 @@ public class NettyClientNIOInvoke extends AbstractInvoker {
 			log.error(e.getMessage());
 		}
 		try {
-			return rpcResponseFuture.get(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS);
+			RPCResponse rpcResponse = rpcResponseFuture.get(1, TimeUnit.SECONDS);
+			return rpcResponse;
 		} catch (Exception e) {
 			log.warn("Exception:", e);
 			return null;

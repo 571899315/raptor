@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_raptor-common" default="compile.module.raptor-common">
+  <dirname property="module.raptor-common.basedir" file="${ant.file.module_raptor-common}"/>
+  
+  <property name="module.jdk.home.raptor-common" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.raptor-common" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.raptor-common" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.raptor-common" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="raptor-common.output.dir" value="${module.raptor-common.basedir}/../../../out/production/raptor-common"/>
+  <property name="raptor-common.testoutput.dir" value="${module.raptor-common.basedir}/../../../out/test/raptor-common"/>
+  
+  <path id="raptor-common.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="raptor-common.module.production.classpath">
+    <path refid="${module.jdk.classpath.raptor-common}"/>
+  </path>
+  
+  <path id="raptor-common.runtime.production.module.classpath">
+    <pathelement location="${raptor-common.output.dir}"/>
+  </path>
+  
+  <path id="raptor-common.module.classpath">
+    <path refid="${module.jdk.classpath.raptor-common}"/>
+    <pathelement location="${raptor-common.output.dir}"/>
+  </path>
+  
+  <path id="raptor-common.runtime.module.classpath">
+    <pathelement location="${raptor-common.testoutput.dir}"/>
+    <pathelement location="${raptor-common.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.raptor-common">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.raptor-common">
+    <patternset refid="excluded.from.module.raptor-common"/>
+  </patternset>
+  
+  
+  <target name="compile.module.raptor-common" depends="compile.module.raptor-common.production,compile.module.raptor-common.tests" description="Compile module raptor-common"/>
+  
+  <target name="compile.module.raptor-common.production" depends="register.custom.compilers" description="Compile module raptor-common; production classes"/>
+  
+  <target name="compile.module.raptor-common.tests" depends="register.custom.compilers,compile.module.raptor-common.production" description="compile module raptor-common; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.raptor-common" description="cleanup module">
+    <delete dir="${raptor-common.output.dir}"/>
+    <delete dir="${raptor-common.testoutput.dir}"/>
+  </target>
+</project>

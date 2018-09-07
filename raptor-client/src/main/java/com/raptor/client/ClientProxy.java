@@ -1,33 +1,17 @@
-package com.raptor.client.proxy;
+package com.raptor.client;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.net.InetSocketAddress;
-import java.util.UUID;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
+import com.raptor.common.config.ClientConfig;
+import com.raptor.common.model.RPCRequest;
+import com.raptor.common.util.ExtensionLoader;
 import com.raptor.loadbalancer.Cluster;
 import com.raptor.loadbalancer.HaStrategy;
 import com.raptor.loadbalancer.LoadBalance;
-import org.springframework.beans.factory.FactoryBean;
-import org.springframework.util.StringUtils;
-
-import com.raptor.client.ChannelManager;
-import com.raptor.client.RPCResponseFuture;
-import com.raptor.client.ResponseFutureManager;
-import com.raptor.common.config.ClientConfig;
-import com.raptor.common.model.RPCRequest;
-import com.raptor.common.model.RPCResponse;
-import com.raptor.common.util.ExtensionLoader;
 import com.raptor.proxy.ProxyFactory;
 import com.raptor.registry.ServiceDiscovery;
+import org.springframework.beans.factory.FactoryBean;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFutureListener;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+import java.lang.reflect.Method;
+import java.util.UUID;
 
 /**
  * FactoryBean for service proxy

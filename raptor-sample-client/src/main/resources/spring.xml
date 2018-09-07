@@ -16,7 +16,7 @@
         <constructor-arg name="port" value="8500"/>
     </bean>
 
-    <bean id="rpcProxy" class="com.raptor.client.proxy.ServiceProxyProvider">
+    <bean id="rpcProxy" class="com.raptor.client.ServiceProxyProvider">
         <constructor-arg name="serviceDiscovery" ref="serviceDiscovery"/>
         <constructor-arg name="basePackages" value="com.raptor.sample.spi"/>
     </bean>

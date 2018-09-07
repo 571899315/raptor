@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_raptor-load-balancer" default="compile.module.raptor-load-balancer">
+  <dirname property="module.raptor-load-balancer.basedir" file="${ant.file.module_raptor-load-balancer}"/>
+  
+  <property name="module.jdk.home.raptor-load-balancer" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.raptor-load-balancer" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.raptor-load-balancer" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.raptor-load-balancer" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="raptor-load-balancer.output.dir" value="${module.raptor-load-balancer.basedir}/../../../out/production/raptor-load-balancer"/>
+  <property name="raptor-load-balancer.testoutput.dir" value="${module.raptor-load-balancer.basedir}/../../../out/test/raptor-load-balancer"/>
+  
+  <path id="raptor-load-balancer.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="raptor-load-balancer.module.production.classpath">
+    <path refid="${module.jdk.classpath.raptor-load-balancer}"/>
+  </path>
+  
+  <path id="raptor-load-balancer.runtime.production.module.classpath">
+    <pathelement location="${raptor-load-balancer.output.dir}"/>
+  </path>
+  
+  <path id="raptor-load-balancer.module.classpath">
+    <path refid="${module.jdk.classpath.raptor-load-balancer}"/>
+    <pathelement location="${raptor-load-balancer.output.dir}"/>
+  </path>
+  
+  <path id="raptor-load-balancer.runtime.module.classpath">
+    <pathelement location="${raptor-load-balancer.testoutput.dir}"/>
+    <pathelement location="${raptor-load-balancer.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.raptor-load-balancer">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.raptor-load-balancer">
+    <patternset refid="excluded.from.module.raptor-load-balancer"/>
+  </patternset>
+  
+  
+  <target name="compile.module.raptor-load-balancer" depends="compile.module.raptor-load-balancer.production,compile.module.raptor-load-balancer.tests" description="Compile module raptor-load-balancer"/>
+  
+  <target name="compile.module.raptor-load-balancer.production" depends="register.custom.compilers" description="Compile module raptor-load-balancer; production classes"/>
+  
+  <target name="compile.module.raptor-load-balancer.tests" depends="register.custom.compilers,compile.module.raptor-load-balancer.production" description="compile module raptor-load-balancer; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.raptor-load-balancer" description="cleanup module">
+    <delete dir="${raptor-load-balancer.output.dir}"/>
+    <delete dir="${raptor-load-balancer.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,24 +1,12 @@
-package com.raptor.client;
-
-import java.net.InetSocketAddress;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+package com.raptor.protocol.client.tcp.netty.nio;
 
 import com.raptor.codec.coder.RPCDecoder;
 import com.raptor.codec.coder.RPCEncoder;
 import com.raptor.codec.serialization.impl.ProtobufSerializer;
 import com.raptor.common.model.RPCRequest;
 import com.raptor.common.model.RPCResponse;
-
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -26,12 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Manage the lifecycle of channels
- *
- * @author hongbin
- * Created on 09/11/2017
- */
+import java.net.InetSocketAddress;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Slf4j
 public class ChannelManager {
 

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_raptor_test" default="compile.module.raptor_test">
+  <dirname property="module.raptor_test.basedir" file="${ant.file.module_raptor_test}"/>
+  
+  <property name="module.jdk.home.raptor_test" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.raptor_test" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.raptor_test" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.raptor_test" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="raptor_test.output.dir" value="undefined"/>
+  <property name="raptor_test.testoutput.dir" value="${module.raptor_test.basedir}/../../out/test/classes"/>
+  
+  <path id="raptor_test.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="raptor_test.module.production.classpath">
+    <path refid="${module.jdk.classpath.raptor_test}"/>
+    <pathelement location="${raptor_main.output.dir}"/>
+  </path>
+  
+  <path id="raptor_test.runtime.production.module.classpath">
+    <path refid="raptor_main.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="raptor_test.module.classpath">
+    <path refid="${module.jdk.classpath.raptor_test}"/>
+    <pathelement location="${raptor_main.output.dir}"/>
+  </path>
+  
+  <path id="raptor_test.runtime.module.classpath">
+    <pathelement location="${raptor_test.testoutput.dir}"/>
+    <path refid="raptor_main.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.raptor_test">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.raptor_test">
+    <patternset refid="excluded.from.module.raptor_test"/>
+  </patternset>
+  
+  
+  <target name="compile.module.raptor_test" depends="compile.module.raptor_test.production,compile.module.raptor_test.tests" description="Compile module raptor_test"/>
+  
+  <target name="compile.module.raptor_test.production" depends="register.custom.compilers,compile.module.raptor_main" description="Compile module raptor_test; production classes"/>
+  
+  <target name="compile.module.raptor_test.tests" depends="register.custom.compilers,compile.module.raptor_test.production" description="compile module raptor_test; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.raptor_test" description="cleanup module">
+    <delete dir="${raptor_test.output.dir}"/>
+    <delete dir="${raptor_test.testoutput.dir}"/>
+  </target>
+</project>

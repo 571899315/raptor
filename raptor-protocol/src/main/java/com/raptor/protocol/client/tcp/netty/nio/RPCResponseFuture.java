@@ -1,23 +1,12 @@
-package com.raptor.client;
+package com.raptor.protocol.client.tcp.netty.nio;
 
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import com.raptor.common.model.RPCResponse;
+import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
-/**
- * @author hongbin
- * Created on 11/11/2017
- */
 public class RPCResponseFuture implements Future<RPCResponse> {
 	@NonNull
 	private String requestId;

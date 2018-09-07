@@ -1,13 +1,9 @@
-package com.raptor.client;
+package com.raptor.protocol.client.tcp.netty.nio;
 
 import com.raptor.common.model.RPCResponse;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author hongbin
- * Created on 11/11/2017
- */
 public class ResponseFutureManager {
 	/**
 	 * Singleton

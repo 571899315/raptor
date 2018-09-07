@@ -1,10 +1,8 @@
-package com.raptor.client.proxy;
+package com.raptor.client;
 
-import java.lang.annotation.Annotation;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.raptor.common.annotation.RaptorService;
+import com.raptor.common.config.ClientConfig;
+import com.raptor.registry.ServiceDiscovery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -21,12 +19,10 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.StringUtils;
 
-import com.raptor.common.annotation.RaptorService;
-import com.raptor.common.config.ClientConfig;
-import com.raptor.registry.ServiceDiscovery;
-
-import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
+import java.lang.annotation.Annotation;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Register proxy bean for required client in bean container. 1. Get interfaces
@@ -36,11 +32,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 public class ServiceProxyProvider implements BeanDefinitionRegistryPostProcessor {
 
-	@NonNull
 	private ServiceDiscovery serviceDiscovery;
 
 	
-	@NonNull
 	private String[] basePackages;
 
 

@@ -113,6 +113,7 @@ public class ServiceProxyProvider implements BeanDefinitionRegistryPostProcessor
 				clientConfig.setSync(annotation.sync());
 				clientConfig.setThreadpool(annotation.threadpool());
 				clientConfig.setProxy(annotation.proxy());
+				clientConfig.setVersion(annotation.version());
 				definition.addPropertyValue("clientConfig", clientConfig);
 				
 			}

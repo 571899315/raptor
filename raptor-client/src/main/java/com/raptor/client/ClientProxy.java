@@ -127,6 +127,7 @@ public  class ClientProxy implements FactoryBean<Object> {
 		RPCRequest request = new RPCRequest();
         request.setRequestId(generateRequestId(targetServiceName));
         request.setInterfaceName(method.getDeclaringClass().getName());
+		request.setVersion(clientConfig.getVersion());
         request.setMethodName(method.getName());
         request.setParameters(args);
         request.setParameterTypes(method.getParameterTypes());

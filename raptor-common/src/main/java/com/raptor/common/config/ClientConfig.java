@@ -23,11 +23,19 @@ public class ClientConfig {
 
 	private String proxy =RaptorConstants.PROXY;
 
-
+	private String version = RaptorConstants.LASTEST_VERSION;
 
 	private boolean sync = true;
 
 	private boolean localFirst = false;
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
 
 	public String getContextPath() {
 		return contextPath;

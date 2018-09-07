@@ -1,6 +1,27 @@
 version '1.0-SNAPSHOT'
- apply plugin:  'java'
+buildscript {
+    ext {
+        springBootVersion = '1.5.4.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+repositories {
+    mavenCentral()
+}
+configurations {
+    providedRuntime
+}
+apply plugin:  'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'jar'
 dependencies {
     compile project(':raptor-server')
     compile project(':raptor-sample-spi')
+    compile('org.springframework.boot:spring-boot-starter-web:1.5.4.RELEASE')
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat:1.5.4.RELEASE')
 }

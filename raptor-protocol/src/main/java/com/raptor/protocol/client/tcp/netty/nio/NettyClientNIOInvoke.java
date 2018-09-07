@@ -28,17 +28,31 @@ public class NettyClientNIOInvoke extends AbstractInvoker {
     public RPCResponse doInvoke(RPCRequest request, ClientConfig config) throws Exception {
         InetSocketAddress serviceAddress = new InetSocketAddress(request.getHost(),request.getPort());
 		// Get channel by service address
-		Channel channel = ChannelManager.getInstance().getChannel(serviceAddress);
-		if (null == channel) {
-			throw new RuntimeException("Cann't get channel for address" + serviceAddress);
-		}
-		// Send request
-		RPCResponse response = sendRequest(channel, request,config);
-		if (response == null) {
-			throw new RuntimeException("response is null");
-		}
-		if (response.hasException()) {
-			throw response.getException();
+		
+        RPCResponse response = null;
+		boolean sync = config.isSync();
+		
+		/***
+		 * 如果是同步
+		 */
+		if(sync) {
+			Channel channel = ChannelManager.getInstance().getChannel(serviceAddress);
+			if (null == channel) {
+				throw new RuntimeException("Cann't get channel for address" + serviceAddress);
+			}
+			// Send request
+			response = sendRequest(channel, request,config);
+			if (response == null) {
+				throw new RuntimeException("response is null");
+			}
+			if (response.hasException()) {
+				throw response.getException();
+			}
+		}else {
+			/**
+			 * 如果是异步
+			 */
+			
 		}
         return response;
     }

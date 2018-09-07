@@ -11,7 +11,7 @@
 
     <context:property-placeholder location="classpath:rpc.properties"/>
 
-    <bean id="serviceDiscovery" class="com.raptor.registry.impl.consul.ConsulServiceDiscovery">
+    <bean id="serviceDiscovery" class="com.raptor.registry.impl.consul.ConsulServiceDiscovery" init-method="init">
         <constructor-arg name="host" value="127.0.0.1"/>
         <constructor-arg name="port" value="8500"/>
     </bean>

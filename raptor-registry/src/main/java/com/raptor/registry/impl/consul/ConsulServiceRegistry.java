@@ -4,6 +4,7 @@ import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.ConsulRawClient;
 import com.ecwid.consul.v1.agent.model.NewService;
 import com.raptor.common.model.ServiceAddress;
+import com.raptor.registry.RegisterContext;
 import com.raptor.registry.ServiceRegistry;
 
 import java.util.ArrayList;
@@ -43,13 +44,8 @@ public class ConsulServiceRegistry   implements ServiceRegistry {
 		check.setInterval("1s");
 		newService.setCheck(check);
 		consulClient.agentServiceRegister(newService);
+		RegisterContext.addServiceAddressToCache(serviceAddress);
 	}
-
-
-
-
-
-
 
 	private String generateNewIdForService(String serviceName, ServiceAddress serviceAddress){
 		// serviceName + ip + port

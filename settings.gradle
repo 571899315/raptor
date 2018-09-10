@@ -6,8 +6,5 @@ include 'raptor-codec'
 include 'raptor-common'
 include 'raptor-proxy'
 include 'raptor-protocol'
-//include 'raptor-sample-spi'
-//include 'raptor-sample-client'
-//include 'raptor-sample-server'
 include 'raptor-load-balancer'
 

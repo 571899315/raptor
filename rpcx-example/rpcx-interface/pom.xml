@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>rpcx-example</artifactId>
+		<groupId>com.rpc.rpcx</groupId>
+		<version>1.0.1</version>
+	</parent>
+	<artifactId>rpcx-interface</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0.0</version>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.raptor</groupId>
+			<artifactId>raptor-common</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<finalName>rpcx-interface</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

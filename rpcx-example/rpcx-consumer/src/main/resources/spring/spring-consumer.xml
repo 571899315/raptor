@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd" default-autowire="byName">
+	
+	<context:annotation-config />
+
+	<bean id="userService" class="com.rpc.rpcx.consumer.SpringConsumerBean">
+		<property name="serviceInterfaceName" value="com.rpc.rpcx.UserService"/>
+	</bean>	
+	
+	<bean class="com.rpc.rpcx.register.support.RegisterConsul"
+		init-method="init">
+		<property name="host" value="${rpcx.register.host}" />
+		<property name="port" value="${rpcx.register.port}" />
+		<property name="refreshInterval" value="${rpcx.register.refreshInterval}" />
+	</bean>
+	
+	<!-- <bean class="com.rpc.rpcx.http2.jetty.provider.Http2Server" init-method="start">
+		<property name="maxThreads" value="${rpcx.provider.maxThreads}" />
+		<property name="port" value="${rpcx.provider.port}" />
+		<property name="serializationType" value="${rpcx.serialization}" />
+	</bean> -->
+	
+	
+	
+	
+
+</beans>

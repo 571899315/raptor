@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd" default-autowire="byName">
+	
+	<context:annotation-config />
+
+
+
+	 <bean id="serviceRegistry"  class="com.raptor.registry.impl.consul.ConsulServiceRegistry">
+		<constructor-arg name="consulAddress" value="${rpc.registry_address}"/>
+    </bean>
+
+    <bean id="rpcServer" class="com.raptor.server.RPCServer">
+        <constructor-arg name="serverIp" value="${rpc.server_ip}"/>
+		<constructor-arg name="serverPort" value="${rpc.server_port}"/>
+		<constructor-arg name="serverPort" value="${rpc.server_port}"/>
+        <constructor-arg name="serviceRegistry" ref="serviceRegistry"/>
+    </bean>
+	
+	
+	
+
+</beans>

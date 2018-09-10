@@ -26,6 +26,8 @@ import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import javax.management.RuntimeErrorException;
+
 public class RPCServer implements ApplicationContextAware, InitializingBean {
 
 	// @NonNull
@@ -101,7 +103,7 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 					registerServices();
 					log.info("Server started");
 					future.channel().closeFuture().sync();
-				} catch (InterruptedException e) {
+				} catch (Exception e) {
 					throw new RuntimeException("Server shutdown!", e);
 				} finally {
 					workerGroup.shutdownGracefully();
@@ -112,8 +114,12 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 		}.start();
 	}
 
-	private void registerServices() {
+	private void registerServices() throws Exception {
 		if (serviceRegistry != null) {
+			if(handlerMap.isEmpty()||handlerMap.size() == 0) {
+				throw new Exception("map is null");
+			}
+			
 			for (String interfaceName : handlerMap.keySet()) {
 				String[] names = interfaceName.split("_");
 				ServiceAddress address = new ServiceAddress(serverIp, serverPort);

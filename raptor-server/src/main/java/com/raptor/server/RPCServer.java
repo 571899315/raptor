@@ -1,5 +1,21 @@
 package com.raptor.server;
 
+import java.lang.annotation.Annotation;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.aop.support.AopUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
 import com.raptor.codec.coder.RPCDecoder;
 import com.raptor.codec.coder.RPCEncoder;
 import com.raptor.codec.serialization.impl.ProtobufSerializer;
@@ -9,24 +25,16 @@ import com.raptor.common.model.RPCResponse;
 import com.raptor.common.model.ServiceAddress;
 import com.raptor.registry.ServiceRegistry;
 import com.raptor.server.handler.RPCServerHandler;
+
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.aop.support.AopUtils;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-
-import java.lang.annotation.Annotation;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.management.RuntimeErrorException;
 
 public class RPCServer implements ApplicationContextAware, InitializingBean {
 
@@ -116,10 +124,10 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 
 	private void registerServices() throws Exception {
 		if (serviceRegistry != null) {
-			if(handlerMap.isEmpty()||handlerMap.size() == 0) {
+			if (handlerMap.isEmpty() || handlerMap.size() == 0) {
 				throw new Exception("map is null");
 			}
-			
+
 			for (String interfaceName : handlerMap.keySet()) {
 				String[] names = interfaceName.split("_");
 				ServiceAddress address = new ServiceAddress(serverIp, serverPort);
@@ -133,6 +141,9 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 
 	private List<Class<?>> getServiceInterfaces(ApplicationContext ctx) {
 		Class<? extends Annotation> clazz = RaptorService.class;
-		return ctx.getBeansWithAnnotation(clazz).values().stream().map(AopUtils::getTargetClass).map(cls -> Arrays.asList(cls.getInterfaces())).flatMap(List::stream).filter(cls -> Objects.nonNull(cls.getAnnotation(clazz))).collect(Collectors.toList());
+		Map<String, Object> beansWithAnnotation = ctx.getBeansWithAnnotation(clazz);
+		log.info(" map is:"+beansWithAnnotation);
+		
+		return beansWithAnnotation.values().stream().map(AopUtils::getTargetClass).map(cls -> Arrays.asList(cls.getInterfaces())).flatMap(List::stream).filter(cls -> Objects.nonNull(cls.getAnnotation(clazz))).collect(Collectors.toList());
 	}
 }

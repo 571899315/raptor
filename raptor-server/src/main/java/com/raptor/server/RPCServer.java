@@ -26,27 +26,20 @@ import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * @author hongbin
- * Created on 21/10/2017
- */
 public class RPCServer implements ApplicationContextAware, InitializingBean {
 
-    //@NonNull
-    private String serverIp;
-    //@NonNull
-    private int serverPort;
-	//@NonNull
+	// @NonNull
+	private String serverIp;
+	// @NonNull
+	private int serverPort;
+	// @NonNull
 	private ServiceRegistry serviceRegistry;
 
 	private Map<String, Object> handlerMap = new HashMap<>();
 
 	private static final Logger log = LoggerFactory.getLogger(RPCServer.class);
 
-
-
-
-	public RPCServer(String serverIp, int serverPort,ServiceRegistry serviceRegistry) {
+	public RPCServer(String serverIp, int serverPort, ServiceRegistry serviceRegistry) {
 		super();
 		this.serverIp = serverIp;
 		this.serverPort = serverPort;
@@ -57,28 +50,25 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 	public void setApplicationContext(ApplicationContext ctx) throws BeansException {
 		log.info("Putting handler");
 		// Register handler
-		getServiceInterfaces(ctx)
-				.stream()
-				.forEach(interfaceClazz -> {
-					String serviceName = interfaceClazz.getAnnotation(RaptorService.class).value().getName();
+		getServiceInterfaces(ctx).stream().forEach(interfaceClazz -> {
+			String serviceName = interfaceClazz.getAnnotation(RaptorService.class).value().getName();
 
-					try{
-						Class<?> clazz = Class.forName(serviceName);
-						boolean annotationPresent = clazz.isAnnotationPresent(RaptorService.class);
-						if(annotationPresent) {
-							RaptorService annotation = clazz.getAnnotation(RaptorService.class);
-							String verson = annotation.version();
-							Object serviceBean = ctx.getBean(interfaceClazz);
-							handlerMap.put(serviceName+"_"+verson, serviceBean);
-							log.debug("Put handler: {}, {}", serviceName, serviceBean);
-						}
+			try {
+				Class<?> clazz = Class.forName(serviceName);
+				boolean annotationPresent = clazz.isAnnotationPresent(RaptorService.class);
+				if (annotationPresent) {
+					RaptorService annotation = clazz.getAnnotation(RaptorService.class);
+					String verson = annotation.version();
+					Object serviceBean = ctx.getBean(interfaceClazz);
+					handlerMap.put(serviceName + "_" + verson, serviceBean);
+					log.debug("Put handler: {}, {}", serviceName, serviceBean);
+				}
 
+			} catch (Exception e) {
 
-					}catch (Exception e){
+			}
 
-					}
-
-				});
+		});
 	}
 
 	@Override
@@ -87,15 +77,16 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 	}
 
 	private void startServer() {
-		// Get ip and port
-		log.debug("Starting server on port: {}", serverPort);
-		EventLoopGroup bossGroup = new NioEventLoopGroup();
-		EventLoopGroup workerGroup = new NioEventLoopGroup();
-		try {
-			ServerBootstrap bootstrap = new ServerBootstrap();
-			bootstrap.group(bossGroup, workerGroup)
-					.channel(NioServerSocketChannel.class)
-					.childHandler(new ChannelInitializer<SocketChannel>() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				log.debug("Starting server on port: {}", serverPort);
+				EventLoopGroup bossGroup = new NioEventLoopGroup();
+				EventLoopGroup workerGroup = new NioEventLoopGroup();
+				try {
+					ServerBootstrap bootstrap = new ServerBootstrap();
+					bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(new ChannelInitializer<SocketChannel>() {
 						@Override
 						public void initChannel(SocketChannel channel) throws Exception {
 							ChannelPipeline pipeline = channel.pipeline();
@@ -104,22 +95,21 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 							pipeline.addLast(new RPCServerHandler(handlerMap));
 						}
 					});
-			bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
-			bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
-
-			ChannelFuture future = bootstrap.bind(serverIp, serverPort).sync();
-
-			registerServices();
-
-			log.info("Server started");
-
-			future.channel().closeFuture().sync();
-		} catch (InterruptedException e) {
-			throw new RuntimeException("Server shutdown!", e);
-		} finally {
-			workerGroup.shutdownGracefully();
-			bossGroup.shutdownGracefully();
-		}
+					bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
+					bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
+					ChannelFuture future = bootstrap.bind(serverIp, serverPort).sync();
+					registerServices();
+					log.info("Server started");
+					future.channel().closeFuture().sync();
+				} catch (InterruptedException e) {
+					throw new RuntimeException("Server shutdown!", e);
+				} finally {
+					workerGroup.shutdownGracefully();
+					bossGroup.shutdownGracefully();
+				}
+			}
+		}) {
+		}.start();
 	}
 
 	private void registerServices() {
@@ -137,12 +127,6 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 
 	private List<Class<?>> getServiceInterfaces(ApplicationContext ctx) {
 		Class<? extends Annotation> clazz = RaptorService.class;
-		return ctx.getBeansWithAnnotation(clazz)
-				.values().stream()
-				.map(AopUtils::getTargetClass)
-				.map(cls -> Arrays.asList(cls.getInterfaces()))
-				.flatMap(List::stream)
-				.filter(cls -> Objects.nonNull(cls.getAnnotation(clazz)))
-				.collect(Collectors.toList());
+		return ctx.getBeansWithAnnotation(clazz).values().stream().map(AopUtils::getTargetClass).map(cls -> Arrays.asList(cls.getInterfaces())).flatMap(List::stream).filter(cls -> Objects.nonNull(cls.getAnnotation(clazz))).collect(Collectors.toList());
 	}
 }

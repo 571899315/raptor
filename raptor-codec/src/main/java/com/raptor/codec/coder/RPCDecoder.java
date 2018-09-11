@@ -1,12 +1,12 @@
 package com.raptor.codec.coder;
 
+import java.util.List;
+
+import com.raptor.codec.serialization.Serializer;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import lombok.AllArgsConstructor;
-import com.raptor.codec.serialization.Serializer;
-
-import java.util.List;
 
 /**
  * @author hongbin

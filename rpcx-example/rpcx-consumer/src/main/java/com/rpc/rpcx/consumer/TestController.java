@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.alibaba.fastjson.JSON;
 import com.rpc.rpcx.UserRequest;
 import com.rpc.rpcx.UserResponse;
 import com.rpc.rpcx.UserService;
-import com.rpc.rpcx.util.SpringUtils;
 
 @Controller
 public class TestController {
@@ -26,7 +24,6 @@ public class TestController {
 		String result = "";
 		UserRequest request = new UserRequest();
 		UserResponse response = userService.getRequest(request);
-		logger.info("response is:" + JSON.toJSONString(response));
 		return result;
 	}
 

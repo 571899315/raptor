@@ -1,8 +1,8 @@
 package com.rpc.rpcx;
 
-import com.raptor.common.annotation.RaptorService;
+import com.raptor.common.annotation.RaptorServer;
 
-@RaptorService(UserService.class)
+@RaptorServer(UserService.class)
 public interface UserService {
 
 

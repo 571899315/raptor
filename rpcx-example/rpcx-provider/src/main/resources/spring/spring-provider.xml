@@ -17,7 +17,7 @@
     <bean id="rpcServer" class="com.raptor.server.RPCServer">
         <constructor-arg name="serverIp" value="${rpc.server_ip}"/>
 		<constructor-arg name="serverPort" value="${rpc.server_port}"/>
-		<constructor-arg name="serverPort" value="${rpc.server_port}"/>
+		<constructor-arg name="packageNames" value="com.rpc.rpcx"/>
         <constructor-arg name="serviceRegistry" ref="serviceRegistry"/>
     </bean>
 	

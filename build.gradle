@@ -40,7 +40,6 @@ subprojects {
         dependencyManagement {
             dependencies {
                 dependency 'io.netty:netty-all:4.0.4.Final'
-                dependency 'org.projectlombok:lombok:1.16.16'
                 dependency 'com.dyuproject.protostuff:protostuff-core:1.0.9'
                 dependency 'com.dyuproject.protostuff:protostuff-runtime:1.0.9'
                 dependency 'org.objenesis:objenesis:2.1'
@@ -48,7 +47,6 @@ subprojects {
                 dependency 'org.slf4j:slf4j-api:1.7.25'
                 dependency 'log4j:log4j:1.2.17'
                 dependency 'com.google.guava:guava:11.0.2'
-                dependency 'com.101tec:zkclient:0.4'
                 dependency 'com.ecwid.consul:consul-api:1.2.4'
             }
             resolutionStrategy {

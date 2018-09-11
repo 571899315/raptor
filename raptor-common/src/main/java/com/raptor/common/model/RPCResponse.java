@@ -1,7 +1,5 @@
 package com.raptor.common.model;
 
-import lombok.Data;
-
 public class RPCResponse {
 
     private String requestId;

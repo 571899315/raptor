@@ -1,8 +1,5 @@
 package com.raptor.common.model;
 
-import lombok.Builder;
-import lombok.Data;
-
 /**
  * @author hongbin
  * Created on 21/10/2017

@@ -1,15 +1,5 @@
 package com.raptor.registry.impl.consul;
 
-import com.ecwid.consul.v1.ConsulClient;
-import com.ecwid.consul.v1.QueryParams;
-import com.ecwid.consul.v1.health.model.HealthService;
-import com.raptor.common.model.ServiceAddress;
-import com.raptor.registry.RegisterContext;
-import com.raptor.registry.ServiceDiscovery;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +7,16 @@ import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.ecwid.consul.v1.ConsulClient;
+import com.ecwid.consul.v1.QueryParams;
+import com.ecwid.consul.v1.health.model.HealthService;
+import com.raptor.common.model.ServiceAddress;
+import com.raptor.registry.RegisterContext;
+import com.raptor.registry.ServiceDiscovery;
 
 
 public class ConsulServiceDiscovery implements ServiceDiscovery {
@@ -45,7 +45,7 @@ public class ConsulServiceDiscovery implements ServiceDiscovery {
 				RegisterContext.putCache(interfaceName, version, addresses);
 			}
 		} catch (Exception e) {
-			log.error("服务读取异常(name=" + interfaceName + ",version=" + version + ",error=" + e.getMessage() + ")");
+			log.error("(name=" + interfaceName + ",version=" + version + ",error=" + e.getMessage() + ")");
 		}
 		return addresses;
 	}
@@ -67,7 +67,6 @@ public class ConsulServiceDiscovery implements ServiceDiscovery {
 
 	public synchronized void refresh() {
 		long start = System.currentTimeMillis();
-		log.debug("服务注册刷新开始(开始时间=" + start + ")");
 		Set<Map<String, String>> keys = RegisterContext.getCacheKeys();
 		for (Map<String, String> key : keys) {
 			try {
@@ -78,11 +77,11 @@ public class ConsulServiceDiscovery implements ServiceDiscovery {
 				RegisterContext.putCache(name, version, availableProvider);
 			} catch (Exception e) {
 				long stop = System.currentTimeMillis();
-				log.error("服务注册刷新异常(结束时间=" + stop + "，耗时" + (stop - start) + ",error=" + e.getMessage() + ")");
+				log.error("error =" + stop + "time" + (stop - start) + ",error=" + e.getMessage() + ")");
 			}
 		}
 		long stop = System.currentTimeMillis();
-		log.debug("服务注册刷新结束(结束时间=" + stop + "，耗时" + (stop - start) + ")");
+		log.debug("error =" + stop + "time" + (stop - start) + ")");
 	}
 
 

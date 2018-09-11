@@ -1,8 +1,5 @@
 package com.raptor.common.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 public class ServiceAddress {
 
 	private String name;

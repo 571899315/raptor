@@ -22,31 +22,7 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.rpc.rpcx</groupId>
-			<artifactId>rpcx-http2-netty</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.rpc.rpcx</groupId>
-			<artifactId>rpcx-core</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.rpc.rpcx</groupId>
-			<artifactId>rpcx-consul</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.rpc.rpcx</groupId>
-			<artifactId>rpcx-spring</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.rpc.rpcx</groupId>
-			<artifactId>rpcx-http2-jetty</artifactId>
-			<version>1.0.1</version>
-		</dependency>
+
 		<dependency>
 			<groupId>com.rpc.rpcx</groupId>
 			<artifactId>rpcx-interface</artifactId>

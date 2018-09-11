@@ -1,24 +1,18 @@
 package com.raptor.server.handler;
 
-import com.raptor.registry.impl.consul.ConsulServiceDiscovery;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import com.raptor.common.model.RPCRequest;
-import com.raptor.common.model.RPCResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Method;
 import java.util.Map;
 
-/**
- * Handle the RPC request
- *
- * @author hongbin Created on 21/10/2017
- */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.raptor.common.model.RPCRequest;
+import com.raptor.common.model.RPCResponse;
+
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+
 public class RPCServerHandler extends SimpleChannelInboundHandler<RPCRequest> {
 
 	private static final Logger log = LoggerFactory.getLogger(RPCServerHandler.class);

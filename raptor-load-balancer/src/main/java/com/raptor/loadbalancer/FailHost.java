@@ -1,7 +1,5 @@
 package com.raptor.loadbalancer;
 
-import lombok.Data;
-
 public class FailHost {
 	
 	private String ip;

@@ -25,9 +25,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class ChannelManager {
 
 	private static final Logger log = LoggerFactory.getLogger(ChannelManager.class);

@@ -1,22 +1,21 @@
 package com.raptor.protocol.client.tcp.netty.nio;
 
 
-import com.raptor.common.config.ClientConfig;
-import com.raptor.common.model.RPCRequest;
-import com.raptor.common.model.RPCResponse;
-import com.raptor.protocol.client.AbstractInvoker;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFutureListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.net.InetSocketAddress;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-/***
- * netty nio 瀹炵幇
- */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.raptor.common.config.ClientConfig;
+import com.raptor.common.model.RPCRequest;
+import com.raptor.common.model.RPCResponse;
+import com.raptor.protocol.client.AbstractInvoker;
+
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
+
 public class NettyClientNIOInvoke extends AbstractInvoker {
 
 
@@ -32,9 +31,6 @@ public class NettyClientNIOInvoke extends AbstractInvoker {
         RPCResponse response = null;
 		boolean sync = config.isSync();
 		
-		/***
-		 * 如果是同步
-		 */
 		if(sync) {
 			Channel channel = ChannelManager.getInstance().getChannel(serviceAddress);
 			if (null == channel) {
@@ -49,9 +45,6 @@ public class NettyClientNIOInvoke extends AbstractInvoker {
 				throw response.getException();
 			}
 		}else {
-			/**
-			 * 如果是异步
-			 */
 			
 		}
         return response;

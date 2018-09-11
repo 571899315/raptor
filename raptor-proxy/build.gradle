@@ -6,6 +6,5 @@ dependencies {
     compile project(':raptor-registry')
 
     provided 'io.netty:netty-all'
-    provided 'org.projectlombok:lombok'
     provided 'org.slf4j:slf4j-api'
 }

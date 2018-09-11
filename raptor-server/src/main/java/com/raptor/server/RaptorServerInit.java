@@ -3,6 +3,7 @@ package com.raptor.server;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,8 @@ public class RaptorServerInit implements ApplicationContextAware, InitializingBe
 	private String[] clientPackageNames;
 	private static final Logger log = LoggerFactory.getLogger(RaptorServerInit.class);
 
+	private CountDownLatch latch = new CountDownLatch(1);
+
 	public RaptorServerInit(String serverIp, int serverPort, String[] serverPackageNames, String[] clientPackageNames, ServiceRegistry serviceRegistry) {
 
 		if (StringUtils.isEmpty(serverIp) || serverPort <= 0 || serverPackageNames == null || serverPackageNames.length == 0 || serviceRegistry == null) {
@@ -66,6 +69,9 @@ public class RaptorServerInit implements ApplicationContextAware, InitializingBe
 				serverMap.putIfAbsent(clazz.getName(), serviceBean);
 			}
 		}
+		
+		latch.countDown();
+		log.info("notify");
 	}
 
 	@Override
@@ -78,13 +84,17 @@ public class RaptorServerInit implements ApplicationContextAware, InitializingBe
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+
 				// TODO Auto-generated method stub
 				log.debug("Starting server on port: {}", serverPort);
 				EventLoopGroup bossGroup = new NioEventLoopGroup();
 				EventLoopGroup workerGroup = new NioEventLoopGroup();
 				try {
+					log.info("waiting");
+					latch.await();
+					log.info("start~~");
 					ServerBootstrap bootstrap = new ServerBootstrap();
-					if(serverMap.isEmpty()||serverMap.size() == 0) {
+					if (serverMap.isEmpty() || serverMap.size() == 0) {
 						throw new IllegalArgumentException("serverMap is empty");
 					}
 					bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(new ChannelInitializer<SocketChannel>() {
@@ -128,7 +138,7 @@ public class RaptorServerInit implements ApplicationContextAware, InitializingBe
 					}
 				}
 			}
-			if(clientMap.isEmpty()||clientMap.size()==0) {
+			if (clientMap.isEmpty() || clientMap.size() == 0) {
 				throw new IllegalArgumentException("clientMap is empty");
 			}
 			for (String interfaceName : clientMap.keySet()) {

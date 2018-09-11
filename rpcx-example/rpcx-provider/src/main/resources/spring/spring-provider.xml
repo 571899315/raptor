@@ -11,7 +11,7 @@
 		<constructor-arg name="consulAddress" value="${rpc.registry_address}"/>
     </bean>
 
-    <bean id="rpcServer" class="com.raptor.server.RaptorServerInit">
+    <bean id="rpcServer" class="com.raptor.server.RaptorServerInit" init-method="init">
         <constructor-arg name="serverIp" value="${rpc.server_ip}"/>
 		<constructor-arg name="serverPort" value="${rpc.server_port}"/>
 		<constructor-arg name="serverPackageNames" value="com.rpc.rpcx"/>

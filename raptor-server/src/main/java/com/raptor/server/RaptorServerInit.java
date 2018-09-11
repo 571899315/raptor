@@ -8,7 +8,6 @@ import java.util.concurrent.CountDownLatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.StringUtils;
@@ -46,8 +45,6 @@ public class RaptorServerInit implements ApplicationContextAware {
 	private String[] clientPackageNames;
 	private static final Logger log = LoggerFactory.getLogger(RaptorServerInit.class);
 
-	private CountDownLatch latch = new CountDownLatch(1);
-
 	public RaptorServerInit(String serverIp, int serverPort, String[] serverPackageNames, String[] clientPackageNames, ServiceRegistry serviceRegistry) {
 
 		if (StringUtils.isEmpty(serverIp) || serverPort <= 0 || serverPackageNames == null || serverPackageNames.length == 0 || serviceRegistry == null) {
@@ -65,16 +62,22 @@ public class RaptorServerInit implements ApplicationContextAware {
 		List<Class<?>> listByAnnotation = AnnotationUtil.listByAnnotation(serverPackageNames);
 		for (Class<?> clazz : listByAnnotation) {
 			Object serviceBean = ctx.getBean(clazz);
-			if (serviceBean != null) {
-				serverMap.putIfAbsent(clazz.getName(), serviceBean);
+			if (!clazz.isInterface()) {
+				Class<?>[] interfaces = clazz.getInterfaces();
+				for (Class<?> cla : interfaces) {
+					if (serviceBean != null) {
+						serverMap.putIfAbsent(cla.getName(), serviceBean);
+					}
+				}
+			}else {
+				if (serviceBean != null) {
+					serverMap.putIfAbsent(clazz.getName(), serviceBean);
+				}
 			}
 		}
-		
-		latch.countDown();
-		log.info("notify");
 	}
 
-	//@Override
+	// @Override
 	public void init() throws Exception {
 		startServer();
 		registerServices();
@@ -88,9 +91,6 @@ public class RaptorServerInit implements ApplicationContextAware {
 				EventLoopGroup bossGroup = new NioEventLoopGroup();
 				EventLoopGroup workerGroup = new NioEventLoopGroup();
 				try {
-					log.info("waiting");
-					latch.await();
-					log.info("start~~");
 					ServerBootstrap bootstrap = new ServerBootstrap();
 					if (serverMap.isEmpty() || serverMap.size() == 0) {
 						throw new IllegalArgumentException("serverMap is empty");

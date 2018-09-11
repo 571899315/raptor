@@ -2,7 +2,10 @@ package com.rpc.rpcx;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
+@RaptorServer(UserServiceImpl.class)
 public class UserServiceImpl implements UserService {
 
 

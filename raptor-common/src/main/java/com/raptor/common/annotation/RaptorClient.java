@@ -5,14 +5,10 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import org.springframework.stereotype.Component;
-
 import com.raptor.common.config.RaptorConstants;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Component
 @Inherited
 public @interface RaptorClient {
 	Class<?> value();

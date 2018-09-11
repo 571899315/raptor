@@ -41,15 +41,12 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 	private ServiceRegistry serviceRegistry;
 
 	private Map<String, Object> handlerMap = new ConcurrentHashMap<>();
-	
+
 	private String[] packageNames;
-	
-	
-	
 
 	private static final Logger log = LoggerFactory.getLogger(RPCServer.class);
 
-	public RPCServer(String serverIp, int serverPort,String[] packageNames, ServiceRegistry serviceRegistry) {
+	public RPCServer(String serverIp, int serverPort, String[] packageNames, ServiceRegistry serviceRegistry) {
 		super();
 		this.serverIp = serverIp;
 		this.serverPort = serverPort;
@@ -69,35 +66,12 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 				handlerMap.putIfAbsent(clazz.getName(), serviceBean);
 			}
 		}
-		
-//		if(handlerMap.isEmpty()||handlerMap.size()==0) {
-//			throw new NestedRuntimeException("map is null");
-//		}
-		// Register handler
-//		getServiceInterfaces(ctx).stream().forEach(interfaceClazz -> {
-//			String serviceName = interfaceClazz.getAnnotation(RaptorService.class).value().getName();
-//
-//			try {
-//				Class<?> clazz = Class.forName(serviceName);
-//				boolean annotationPresent = clazz.isAnnotationPresent(RaptorService.class);
-//				if (annotationPresent) {
-//					RaptorService annotation = clazz.getAnnotation(RaptorService.class);
-//					String verson = annotation.version();
-//					Object serviceBean = ctx.getBean(interfaceClazz);
-//					handlerMap.put(serviceName + "_" + verson, serviceBean);
-//					log.debug("Put handler: {}, {}", serviceName, serviceBean);
-//				}
-//
-//			} catch (Exception e) {
-//
-//			}
-//
-//		});
 	}
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		startServer();
+		registerServices();
 	}
 
 	private void startServer() {
@@ -122,7 +96,6 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 					bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
 					bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
 					ChannelFuture future = bootstrap.bind(serverIp, serverPort).sync();
-					registerServices();
 					log.info("Server started");
 					future.channel().closeFuture().sync();
 				} catch (Exception e) {
@@ -151,14 +124,5 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 				log.info("Registering service: {} with address: {}:{}", interfaceName, serverIp, serverPort);
 			}
 		}
-	}
-
-	private List<Class<?>> getServiceInterfaces(ApplicationContext ctx) {
-		return null;
-//		Class<? extends Annotation> clazz = RaptorService.class;
-//		Map<String, Object> beansWithAnnotation = ctx.getBeansWithAnnotation(clazz);
-//		log.info(" map is:"+beansWithAnnotation);
-//		
-//		return beansWithAnnotation.values().stream().map(AopUtils::getTargetClass).map(cls -> Arrays.asList(cls.getInterfaces())).flatMap(List::stream).filter(cls -> Objects.nonNull(cls.getAnnotation(clazz))).collect(Collectors.toList());
 	}
 }

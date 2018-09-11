@@ -54,73 +54,11 @@ public  class ClientProxy implements FactoryBean<Object> {
 	}
 
 
-//	private Object doInvoke(Object proxy, Method method, Object[] args) throws Throwable {
-//		String targetServiceName = type.getName();
-//
-//		// Create request
-//		RPCRequest request = RPCRequest.builder().requestId(generateRequestId(targetServiceName)).interfaceName(method.getDeclaringClass().getName()).methodName(method.getName()).parameters(args).parameterTypes(method.getParameterTypes()).build();
-//
-//		// Get service address
-//		InetSocketAddress serviceAddress = getServiceAddress(targetServiceName);
-//
-//		// Get channel by service address
-//		Channel channel = ChannelManager.getInstance().getChannel(serviceAddress);
-//		if (null == channel) {
-//			throw new RuntimeException("Cann't get channel for address" + serviceAddress);
-//		}
-//
-//		// Send request
-//		RPCResponse response = sendRequest(channel, request);
-//		if (response == null) {
-//			throw new RuntimeException("response is null");
-//		}
-//		if (response.hasException()) {
-//			throw response.getException();
-//		} else {
-//			return response.getResult();
-//		}
-//	}
 //
 	private String generateRequestId(String targetServiceName) {
 		return targetServiceName + "-" + UUID.randomUUID().toString();
 	}
-//
-//	private InetSocketAddress getServiceAddress(String targetServiceName) {
-//		String serviceAddress = "";
-//		if (serviceDiscovery != null) {
-//			serviceAddress = serviceDiscovery.discover(targetServiceName);
-//			log.debug("Get address: {} for service: {}", serviceAddress, targetServiceName);
-//		}
-//		if (StringUtils.isEmpty(serviceAddress)) {
-//			throw new RuntimeException(String.format("Address of target service %s is empty", targetServiceName));
-//		}
-//		String[] array = StringUtils.split(serviceAddress, ":");
-//		String host = array[0];
-//		int port = Integer.parseInt(array[1]);
-//		return new InetSocketAddress(host, port);
-//	}
-//
-//	private RPCResponse sendRequest(Channel channel, RPCRequest request) {
-//		CountDownLatch latch = new CountDownLatch(1);
-//		RPCResponseFuture rpcResponseFuture = new RPCResponseFuture(request.getRequestId());
-//		ResponseFutureManager.getInstance().registerFuture(rpcResponseFuture);
-//		channel.writeAndFlush(request).addListener((ChannelFutureListener) future -> {
-//			latch.countDown();
-//		});
-//		try {
-//			latch.await();
-//		} catch (InterruptedException e) {
-//			log.error(e.getMessage());
-//		}
-//
-//		try {
-//			// TODO: make timeout configurable
-//			return rpcResponseFuture.get(1, TimeUnit.SECONDS);
-//		} catch (Exception e) {
-//			log.warn("Exception:", e);
-//			return null;
-//		}
-//	}
+
 
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		String targetServiceName = type.getName();

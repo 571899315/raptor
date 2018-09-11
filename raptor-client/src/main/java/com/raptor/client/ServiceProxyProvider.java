@@ -1,8 +1,10 @@
 package com.raptor.client;
 
-import com.raptor.common.annotation.RaptorService;
-import com.raptor.common.config.ClientConfig;
-import com.raptor.registry.ServiceDiscovery;
+import java.lang.annotation.Annotation;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -19,10 +21,9 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.StringUtils;
 
-import java.lang.annotation.Annotation;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import com.raptor.common.annotation.RaptorClient;
+import com.raptor.common.config.ClientConfig;
+import com.raptor.registry.ServiceDiscovery;
 
 /**
  * Register proxy bean for required client in bean container. 1. Get interfaces
@@ -51,7 +52,7 @@ public class ServiceProxyProvider implements BeanDefinitionRegistryPostProcessor
 	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
 		log.info("register beans");
 		ClassPathScanningCandidateComponentProvider scanner = getScanner();
-		scanner.addIncludeFilter(new AnnotationTypeFilter(RaptorService.class));
+		scanner.addIncludeFilter(new AnnotationTypeFilter(RaptorClient.class));
 
 		for (String basePackage : getBasePackages()) {
 			Set<BeanDefinition> candidateComponents = scanner.findCandidateComponents(basePackage);
@@ -98,9 +99,9 @@ public class ServiceProxyProvider implements BeanDefinitionRegistryPostProcessor
 		String beanName = StringUtils.uncapitalize(className.substring(className.lastIndexOf('.') + 1));
 		try {
 			Class<?> clazz = Class.forName(className);
-			boolean annotationPresent = clazz.isAnnotationPresent(RaptorService.class);
+			boolean annotationPresent = clazz.isAnnotationPresent(RaptorClient.class);
 			if(annotationPresent) {
-				RaptorService annotation = clazz.getAnnotation(RaptorService.class);
+				RaptorClient annotation = clazz.getAnnotation(RaptorClient.class);
 				ClientConfig clientConfig = new ClientConfig();
 				clientConfig.setCluster(annotation.cluster());
 				clientConfig.setConnectTimeoutMillis(annotation.connectTimeoutMillis());
@@ -126,7 +127,9 @@ public class ServiceProxyProvider implements BeanDefinitionRegistryPostProcessor
 		return new BeanDefinitionHolder(definition.getBeanDefinition(), beanName);
 	}
 
+	@SuppressWarnings("rawtypes")
 	private Set<String> getBasePackages() {
+		
 		Set set = new HashSet<>();
 		Collections.addAll(set, basePackages);
 		return set;

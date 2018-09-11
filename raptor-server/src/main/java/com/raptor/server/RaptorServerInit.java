@@ -35,7 +35,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-public class RaptorServerInit implements ApplicationContextAware, InitializingBean {
+public class RaptorServerInit implements ApplicationContextAware {
 
 	private String serverIp;
 	private int serverPort;
@@ -74,8 +74,8 @@ public class RaptorServerInit implements ApplicationContextAware, InitializingBe
 		log.info("notify");
 	}
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
+	//@Override
+	public void init() throws Exception {
 		startServer();
 		registerServices();
 	}
@@ -84,8 +84,6 @@ public class RaptorServerInit implements ApplicationContextAware, InitializingBe
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-
-				// TODO Auto-generated method stub
 				log.debug("Starting server on port: {}", serverPort);
 				EventLoopGroup bossGroup = new NioEventLoopGroup();
 				EventLoopGroup workerGroup = new NioEventLoopGroup();

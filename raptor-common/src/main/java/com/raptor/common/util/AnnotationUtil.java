@@ -17,14 +17,10 @@ public class AnnotationUtil {
 		List<Class<?>> result = new ArrayList<>();
 		if (clsList != null && clsList.size() > 0) {
 			for (Class<?> clazz : clsList) {
-				boolean isInterface = clazz.isInterface();
-				if (isInterface) {
-					boolean annotation = clazz.isAnnotationPresent(RaptorServer.class);
-					if (annotation) {
-						result.add(clazz);
-					}
+				boolean annotation = clazz.isAnnotationPresent(RaptorServer.class);
+				if (annotation) {
+					result.add(clazz);
 				}
-
 			}
 		}
 		return result;

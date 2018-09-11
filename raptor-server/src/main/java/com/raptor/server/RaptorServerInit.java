@@ -10,14 +10,17 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.util.StringUtils;
 
 import com.raptor.codec.coder.RPCDecoder;
 import com.raptor.codec.coder.RPCEncoder;
 import com.raptor.codec.serialization.impl.ProtobufSerializer;
+import com.raptor.common.annotation.RaptorClient;
 import com.raptor.common.model.RPCRequest;
 import com.raptor.common.model.RPCResponse;
 import com.raptor.common.model.ServiceAddress;
 import com.raptor.common.util.AnnotationUtil;
+import com.raptor.common.util.ClassUtil;
 import com.raptor.registry.ServiceRegistry;
 import com.raptor.server.handler.RPCServerHandler;
 
@@ -31,39 +34,36 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-public class RPCServer implements ApplicationContextAware, InitializingBean {
+public class RaptorServerInit implements ApplicationContextAware, InitializingBean {
 
-	// @NonNull
 	private String serverIp;
-	// @NonNull
 	private int serverPort;
-	// @NonNull
 	private ServiceRegistry serviceRegistry;
+	private Map<String, Object> serverMap = new ConcurrentHashMap<>();
+	private Map<String, Object> clientMap = new ConcurrentHashMap<>();
+	private String[] serverPackageNames;
+	private String[] clientPackageNames;
+	private static final Logger log = LoggerFactory.getLogger(RaptorServerInit.class);
 
-	private Map<String, Object> handlerMap = new ConcurrentHashMap<>();
+	public RaptorServerInit(String serverIp, int serverPort, String[] serverPackageNames, String[] clientPackageNames, ServiceRegistry serviceRegistry) {
 
-	private String[] packageNames;
-
-	private static final Logger log = LoggerFactory.getLogger(RPCServer.class);
-
-	public RPCServer(String serverIp, int serverPort, String[] packageNames, ServiceRegistry serviceRegistry) {
-		super();
+		if (StringUtils.isEmpty(serverIp) || serverPort <= 0 || serverPackageNames == null || serverPackageNames.length == 0 || serviceRegistry == null) {
+			throw new IllegalArgumentException("illegal Argument");
+		}
 		this.serverIp = serverIp;
 		this.serverPort = serverPort;
-		this.packageNames = packageNames;
+		this.serverPackageNames = serverPackageNames;
+		this.clientPackageNames = clientPackageNames;
 		this.serviceRegistry = serviceRegistry;
 	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext ctx) throws BeansException {
-		log.info("Putting handler");
-		
-		List<Class<?>> listByAnnotation = AnnotationUtil.listByAnnotation(packageNames);
-		
-		for(Class<?> clazz:listByAnnotation) {
+		List<Class<?>> listByAnnotation = AnnotationUtil.listByAnnotation(serverPackageNames);
+		for (Class<?> clazz : listByAnnotation) {
 			Object serviceBean = ctx.getBean(clazz);
-			if(serviceBean != null) {
-				handlerMap.putIfAbsent(clazz.getName(), serviceBean);
+			if (serviceBean != null) {
+				serverMap.putIfAbsent(clazz.getName(), serviceBean);
 			}
 		}
 	}
@@ -90,7 +90,7 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 							ChannelPipeline pipeline = channel.pipeline();
 							pipeline.addLast(new RPCDecoder(RPCRequest.class, new ProtobufSerializer()));
 							pipeline.addLast(new RPCEncoder(RPCResponse.class, new ProtobufSerializer()));
-							pipeline.addLast(new RPCServerHandler(handlerMap));
+							pipeline.addLast(new RPCServerHandler(serverMap));
 						}
 					});
 					bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
@@ -111,11 +111,21 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
 
 	private void registerServices() throws Exception {
 		if (serviceRegistry != null) {
-			if (handlerMap.isEmpty() || handlerMap.size() == 0) {
-				throw new Exception("map is null");
-			}
 
-			for (String interfaceName : handlerMap.keySet()) {
+			List<Class<?>> clsList = ClassUtil.getClasses(clientPackageNames);
+			if (clsList != null && clsList.size() > 0) {
+				for (Class<?> clazz : clsList) {
+					boolean annotation = clazz.isAnnotationPresent(RaptorClient.class);
+					if (annotation) {
+						RaptorClient client = clazz.getAnnotation(RaptorClient.class);
+						Class<?> value = client.value();
+						String interfaceName = value.getName();
+						String version = client.version();
+						clientMap.putIfAbsent(interfaceName + "_" + version, client);
+					}
+				}
+			}
+			for (String interfaceName : clientMap.keySet()) {
 				String[] names = interfaceName.split("_");
 				ServiceAddress address = new ServiceAddress(serverIp, serverPort);
 				address.setName(names[0]);

@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.raptor.common.annotation.RaptorServer;
+
 @Service
 @RaptorServer(UserServiceImpl.class)
 public class UserServiceImpl implements UserService {

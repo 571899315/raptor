@@ -48,7 +48,7 @@ public class RPCServerHandler extends SimpleChannelInboundHandler<RPCRequest> {
 		// Get service bean
 		String serviceName = request.getInterfaceName();
 		String verson = request.getVersion();
-		Object serviceBean = handlerMap.get(serviceName + "_" + verson);
+		Object serviceBean = handlerMap.get(serviceName);
 		if (serviceBean == null) {
 			throw new RuntimeException(String.format("No service bean available: %s", serviceName));
 		}

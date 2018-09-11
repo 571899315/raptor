@@ -125,6 +125,9 @@ public class RaptorServerInit implements ApplicationContextAware, InitializingBe
 					}
 				}
 			}
+			if(clientMap.isEmpty()||clientMap.size()==0) {
+				throw new IllegalArgumentException("clientMap is empty");
+			}
 			for (String interfaceName : clientMap.keySet()) {
 				String[] names = interfaceName.split("_");
 				ServiceAddress address = new ServiceAddress(serverIp, serverPort);

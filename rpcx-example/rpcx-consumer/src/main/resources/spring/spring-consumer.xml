@@ -8,13 +8,13 @@
 	
 	<context:annotation-config />
 
-	<bean id="serviceDiscover"  class="com.raptor.registry.impl.consul.ConsulServiceDiscovery">
+	<bean id="serviceDiscover"  class="com.raptor.registry.impl.consul.ConsulServiceDiscovery" init-method="init">
 		<constructor-arg name="host" value="127.0.0.1"/>
 		<constructor-arg name="port" value="8500"/>
 	</bean>
 
 	<bean id="rpcServer" class="com.raptor.client.ServiceProxyProvider">
-		<constructor-arg name="basePackages" value="${rpc.server_ip}"/>
+		<constructor-arg name="basePackages" value="com.rpc.rpcx"/>
 		<constructor-arg name="serviceDiscovery" ref="serviceDiscover"/>
 	</bean>
 

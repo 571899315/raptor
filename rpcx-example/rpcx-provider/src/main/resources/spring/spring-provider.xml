@@ -7,21 +7,15 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd" default-autowire="byName">
 	
 	<context:annotation-config />
-
-
-
 	 <bean id="serviceRegistry"  class="com.raptor.registry.impl.consul.ConsulServiceRegistry">
 		<constructor-arg name="consulAddress" value="${rpc.registry_address}"/>
     </bean>
 
-    <bean id="rpcServer" class="com.raptor.server.RPCServer">
+    <bean id="rpcServer" class="com.raptor.server.RaptorServerInit">
         <constructor-arg name="serverIp" value="${rpc.server_ip}"/>
 		<constructor-arg name="serverPort" value="${rpc.server_port}"/>
-		<constructor-arg name="packageNames" value="com.rpc.rpcx"/>
+		<constructor-arg name="serverPackageNames" value="com.rpc.rpcx"/>
+		<constructor-arg name="clientPackageNames" value="com.rpc.rpcx"/>
         <constructor-arg name="serviceRegistry" ref="serviceRegistry"/>
     </bean>
-	
-	
-	
-
 </beans>

@@ -8,25 +8,14 @@
 	
 	<context:annotation-config />
 
-	<bean id="userService" class="com.rpc.rpcx.consumer.SpringConsumerBean">
-		<property name="serviceInterfaceName" value="com.rpc.rpcx.UserService"/>
-	</bean>	
-	
-	<bean class="com.rpc.rpcx.register.support.RegisterConsul"
-		init-method="init">
-		<property name="host" value="${rpcx.register.host}" />
-		<property name="port" value="${rpcx.register.port}" />
-		<property name="refreshInterval" value="${rpcx.register.refreshInterval}" />
+	<bean id="serviceDiscover"  class="com.raptor.registry.impl.consul.ConsulServiceDiscovery">
+		<constructor-arg name="host" value="127.0.0.1"/>
+		<constructor-arg name="port" value="8500"/>
 	</bean>
-	
-	<!-- <bean class="com.rpc.rpcx.http2.jetty.provider.Http2Server" init-method="start">
-		<property name="maxThreads" value="${rpcx.provider.maxThreads}" />
-		<property name="port" value="${rpcx.provider.port}" />
-		<property name="serializationType" value="${rpcx.serialization}" />
-	</bean> -->
-	
-	
-	
-	
+
+	<bean id="rpcServer" class="com.raptor.client.ServiceProxyProvider">
+		<constructor-arg name="basePackages" value="${rpc.server_ip}"/>
+		<constructor-arg name="serviceDiscovery" ref="serviceDiscover"/>
+	</bean>
 
 </beans>

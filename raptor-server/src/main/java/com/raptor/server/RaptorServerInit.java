@@ -84,6 +84,9 @@ public class RaptorServerInit implements ApplicationContextAware, InitializingBe
 				EventLoopGroup workerGroup = new NioEventLoopGroup();
 				try {
 					ServerBootstrap bootstrap = new ServerBootstrap();
+					if(serverMap.isEmpty()||serverMap.size() == 0) {
+						throw new IllegalArgumentException("serverMap is empty");
+					}
 					bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(new ChannelInitializer<SocketChannel>() {
 						@Override
 						public void initChannel(SocketChannel channel) throws Exception {

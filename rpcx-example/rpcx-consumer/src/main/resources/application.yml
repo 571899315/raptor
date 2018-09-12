@@ -4,21 +4,3 @@ server:
 spring:
   application:
     name: rpcx-consumer
-rpcx:
-  https:
-    port: 8111
-  serialization: fastjson
-  register:
-    host: 127.0.0.1
-    port: 8500
-    healthCheckAddress: http://localhost:${server.port}/health
-    healthInterval: 10
-    refreshInterval: 5
-  service:
-    invokeUrl: http://localhost:8081
-    trustkeyPasswd: 123456
-  provider:
-    host: 127.0.0.1
-    port: 8443
-    keyStoreFile: META-INF/keystore.jks
-    keyStorePassword: 123456

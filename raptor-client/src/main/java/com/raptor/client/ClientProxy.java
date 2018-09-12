@@ -73,7 +73,7 @@ public  class ClientProxy implements FactoryBean<Object> {
 		if(response.hasException()){
 			throw response.getException();
 		}
-		return response;
+		return response.getResult();
 	}
 
 

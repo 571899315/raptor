@@ -54,7 +54,7 @@ public class ConsulServiceDiscovery implements ServiceDiscovery {
 	public void init() {
 		consulClient = new ConsulClient(host, port);
 		ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
-		service.scheduleAtFixedRate(new ConsulRefresh(), 1, 50, TimeUnit.SECONDS);
+		service.scheduleAtFixedRate(new ConsulRefresh(), 10, 50, TimeUnit.SECONDS);
 	}
 
 	public class ConsulRefresh implements Runnable {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.rpc.rpcx.UserRequest;
 import com.rpc.rpcx.UserResponse;
 import com.rpc.rpcx.UserService;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class TestController {
@@ -20,11 +21,12 @@ public class TestController {
 	private UserService userService;
 
 	@GetMapping(value = "test")
-	public String hello() {
+	@ResponseBody
+	public UserResponse hello() {
 		String result = "";
 		UserRequest request = new UserRequest();
 		UserResponse response = userService.getRequest(request);
-		return result;
+		return response;
 	}
 
 }

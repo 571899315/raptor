@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>raptor</artifactId>
-        <groupId>com.rpc.rpcx</groupId>
+        <groupId>com.raptor</groupId>
         <version>1.0.1</version>
     </parent>
     <artifactId>raptor-server</artifactId>
@@ -13,18 +13,18 @@
    
    <dependencies>
       <dependency>
-            <groupId>com.rpc.rpcx</groupId>
+            <groupId>com.raptor</groupId>
             <artifactId>raptor-common</artifactId>
             <version>${project.version}</version>
         </dependency>
 
          <dependency>
-            <groupId>com.rpc.rpcx</groupId>
+            <groupId>com.raptor</groupId>
             <artifactId>raptor-registry</artifactId>
             <version>${project.version}</version>
         </dependency>
           <dependency>
-            <groupId>com.rpc.rpcx</groupId>
+            <groupId>com.raptor</groupId>
             <artifactId>raptor-codec</artifactId>
             <version>${project.version}</version>
         </dependency>

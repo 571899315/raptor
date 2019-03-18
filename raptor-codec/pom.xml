@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>raptor</artifactId>
-        <groupId>com.rpc.rpcx</groupId>
+        <groupId>com.raptor</groupId>
         <version>1.0.1</version>
     </parent>
     <artifactId>raptor-codec</artifactId>

@@ -25,12 +25,7 @@ import com.raptor.common.annotation.RaptorClient;
 import com.raptor.common.config.ClientConfig;
 import com.raptor.registry.ServiceDiscovery;
 
-/**
- * Register proxy bean for required client in bean container. 1. Get interfaces
- * with annotation RPCService 2. Create proxy bean for the interfaces and
- * register them
- *
- */
+
 public class ServiceProxyProvider implements BeanDefinitionRegistryPostProcessor {
 
 	private ServiceDiscovery serviceDiscovery;

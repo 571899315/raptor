@@ -7,11 +7,7 @@ import com.raptor.common.annotation.RaptorServer;
 
 public class AnnotationUtil {
 
-	/***
-	 * 获取server上的类地址
-	 * @param packageNames
-	 * @return
-	 */
+
 	public static List<Class<?>> listByAnnotation(String[] packageNames) {
 		List<Class<?>> clsList = ClassUtil.getClasses(packageNames);
 		List<Class<?>> result = new ArrayList<>();

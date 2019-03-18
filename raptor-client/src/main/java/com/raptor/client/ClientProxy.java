@@ -14,10 +14,7 @@ import org.springframework.beans.factory.FactoryBean;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
-/**
- * FactoryBean for service proxy
- *
- */
+
 public  class ClientProxy implements FactoryBean<Object> {
 	private Class<?> type;
 

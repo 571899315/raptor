@@ -45,9 +45,11 @@ public class RaptorServerInit implements ApplicationContextAware {
 	private String[] clientPackageNames;
 	private static final Logger log = LoggerFactory.getLogger(RaptorServerInit.class);
 
-	public RaptorServerInit(String serverIp, int serverPort, String[] serverPackageNames, String[] clientPackageNames, ServiceRegistry serviceRegistry) {
+	public RaptorServerInit(String serverIp, int serverPort, String[] serverPackageNames, String[] clientPackageNames,
+			ServiceRegistry serviceRegistry) {
 
-		if (StringUtils.isEmpty(serverIp) || serverPort <= 0 || serverPackageNames == null || serverPackageNames.length == 0 || serviceRegistry == null) {
+		if (StringUtils.isEmpty(serverIp) || serverPort <= 0 || serverPackageNames == null
+				|| serverPackageNames.length == 0 || serviceRegistry == null) {
 			throw new IllegalArgumentException("illegal Argument");
 		}
 		this.serverIp = serverIp;
@@ -69,7 +71,7 @@ public class RaptorServerInit implements ApplicationContextAware {
 						serverMap.putIfAbsent(cla.getName(), serviceBean);
 					}
 				}
-			}else {
+			} else {
 				if (serviceBean != null) {
 					serverMap.putIfAbsent(clazz.getName(), serviceBean);
 				}
@@ -95,15 +97,16 @@ public class RaptorServerInit implements ApplicationContextAware {
 					if (serverMap.isEmpty() || serverMap.size() == 0) {
 						throw new IllegalArgumentException("serverMap is empty");
 					}
-					bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(new ChannelInitializer<SocketChannel>() {
-						@Override
-						public void initChannel(SocketChannel channel) throws Exception {
-							ChannelPipeline pipeline = channel.pipeline();
-							pipeline.addLast(new RPCDecoder(RPCRequest.class, new ProtobufSerializer()));
-							pipeline.addLast(new RPCEncoder(RPCResponse.class, new ProtobufSerializer()));
-							pipeline.addLast(new RPCServerHandler(serverMap));
-						}
-					});
+					bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
+							.childHandler(new ChannelInitializer<SocketChannel>() {
+								@Override
+								public void initChannel(SocketChannel channel) throws Exception {
+									ChannelPipeline pipeline = channel.pipeline();
+									pipeline.addLast(new RPCDecoder(RPCRequest.class, new ProtobufSerializer()));
+									pipeline.addLast(new RPCEncoder(RPCResponse.class, new ProtobufSerializer()));
+									pipeline.addLast(new RPCServerHandler(serverMap));
+								}
+							});
 					bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
 					bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
 					ChannelFuture future = bootstrap.bind(serverIp, serverPort).sync();

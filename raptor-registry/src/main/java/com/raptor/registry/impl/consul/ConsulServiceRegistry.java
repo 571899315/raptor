@@ -10,10 +10,7 @@ import com.raptor.registry.ServiceRegistry;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author hongbin
- * Created on 21/10/2017
- */
+
 public class ConsulServiceRegistry   implements ServiceRegistry {
 
 	private ConsulClient consulClient;

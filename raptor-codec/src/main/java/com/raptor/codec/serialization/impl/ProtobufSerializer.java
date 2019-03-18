@@ -11,10 +11,7 @@ import com.raptor.codec.serialization.Serializer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author hongbin
- * Created on 21/10/2017
- */
+
 public class ProtobufSerializer implements Serializer {
 
 	private static Map<Class<?>, Schema<?>> cachedSchema = new ConcurrentHashMap<>();

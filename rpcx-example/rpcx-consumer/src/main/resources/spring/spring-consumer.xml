@@ -14,7 +14,7 @@
 	</bean>
 
 	<bean id="rpcServer" class="com.raptor.client.ServiceProxyProvider">
-		<constructor-arg name="basePackages" value="com.raptor"/>
+		<constructor-arg name="basePackages" value="com.rpc"/>
 		<constructor-arg name="serviceDiscovery" ref="serviceDiscover"/>
 	</bean>
 

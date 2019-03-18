@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getRequest(UserRequest request) {
+    	logger.info("come");
         UserResponse response = new UserResponse();
         response.setAge("99");
         response.setName("kaka");

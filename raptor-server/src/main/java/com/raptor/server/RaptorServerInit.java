@@ -46,19 +46,7 @@ public class RaptorServerInit implements ApplicationContextAware, InitializingBe
 	private String[] clientPackageNames;
 	private static final Logger log = LoggerFactory.getLogger(RaptorServerInit.class);
 
-	public RaptorServerInit(String serverIp, int serverPort, String[] serverPackageNames, String[] clientPackageNames,
-			ServiceRegistry serviceRegistry) {
-
-		if (StringUtils.isEmpty(serverIp) || serverPort <= 0 || serverPackageNames == null
-				|| serverPackageNames.length == 0 || serviceRegistry == null) {
-			throw new IllegalArgumentException("illegal Argument");
-		}
-		this.serverIp = serverIp;
-		this.serverPort = serverPort;
-		this.serverPackageNames = serverPackageNames;
-		this.clientPackageNames = clientPackageNames;
-		this.serviceRegistry = serviceRegistry;
-	}
+	public RaptorServerInit() {}
 
 	@Override
 	public void setApplicationContext(ApplicationContext ctx) throws BeansException {
@@ -178,13 +166,7 @@ public class RaptorServerInit implements ApplicationContextAware, InitializingBe
 		this.serviceRegistry = serviceRegistry;
 	}
 
-	public Map<String, Object> getServerMap() {
-		return serverMap;
-	}
 
-	public void setServerMap(Map<String, Object> serverMap) {
-		this.serverMap = serverMap;
-	}
 
 	public String[] getServerPackageNames() {
 		return serverPackageNames;

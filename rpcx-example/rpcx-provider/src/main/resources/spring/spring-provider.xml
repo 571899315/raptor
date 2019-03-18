@@ -14,8 +14,8 @@
     <bean id="rpcServer" class="com.raptor.server.RaptorServerInit">
         <property name="serverIp" value="${rpc.server_ip}"/>
 		<property name="serverPort" value="${rpc.server_port}"/>
-		<property name="serverPackageNames" value="com.raptor"/>
-		<property name="clientPackageNames" value="com.raptor"/>
+		<property name="serverPackageNames" value="com.rpc"/>
+		<property name="clientPackageNames" value="com.rpc"/>
         <property name="serviceRegistry" ref="serviceRegistry"/>
     </bean>
 </beans>

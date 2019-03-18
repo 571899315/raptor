@@ -8,6 +8,7 @@ import java.util.concurrent.CountDownLatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.StringUtils;
@@ -34,7 +35,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-public class RaptorServerInit implements ApplicationContextAware {
+public class RaptorServerInit implements ApplicationContextAware, InitializingBean {
 
 	private String serverIp;
 	private int serverPort;
@@ -79,8 +80,8 @@ public class RaptorServerInit implements ApplicationContextAware {
 		}
 	}
 
-	// @Override
-	public void init() throws Exception {
+	@Override
+	public void afterPropertiesSet() throws Exception {
 		startServer();
 		registerServices();
 	}
@@ -152,4 +153,58 @@ public class RaptorServerInit implements ApplicationContextAware {
 			}
 		}
 	}
+
+	public String getServerIp() {
+		return serverIp;
+	}
+
+	public void setServerIp(String serverIp) {
+		this.serverIp = serverIp;
+	}
+
+	public int getServerPort() {
+		return serverPort;
+	}
+
+	public void setServerPort(int serverPort) {
+		this.serverPort = serverPort;
+	}
+
+	public ServiceRegistry getServiceRegistry() {
+		return serviceRegistry;
+	}
+
+	public void setServiceRegistry(ServiceRegistry serviceRegistry) {
+		this.serviceRegistry = serviceRegistry;
+	}
+
+	public Map<String, Object> getServerMap() {
+		return serverMap;
+	}
+
+	public void setServerMap(Map<String, Object> serverMap) {
+		this.serverMap = serverMap;
+	}
+
+	public String[] getServerPackageNames() {
+		return serverPackageNames;
+	}
+
+	public void setServerPackageNames(String[] serverPackageNames) {
+		this.serverPackageNames = serverPackageNames;
+	}
+
+	public String[] getClientPackageNames() {
+		return clientPackageNames;
+	}
+
+	public void setClientPackageNames(String[] clientPackageNames) {
+		this.clientPackageNames = clientPackageNames;
+	}
+	
+	
+	
+	
+	
+	
 }

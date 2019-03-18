@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/raptor-client" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/raptor-codec" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/raptor-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/raptor-load-balancer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/raptor-protocol" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/raptor-proxy" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/raptor-registry" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/raptor-server" charset="UTF-8" />
+  </component>
+</project>

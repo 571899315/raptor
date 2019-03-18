@@ -4,6 +4,6 @@ spring:
   application:
     name: rpcx-provider
 rpc:
-  server_ip: 10.110.1.235
+  server_ip: 127.0.0.1
   server_port: 8002
-  registry_address: localhost:8500
+  registry_address: 127.0.0.1:8500

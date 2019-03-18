@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="raptor-client" />
+        <module name="raptor-codec" />
+        <module name="raptor-common" />
+        <module name="raptor-load-balancer" />
+        <module name="raptor-protocol" />
+        <module name="raptor-proxy" />
+        <module name="raptor-registry" />
+        <module name="raptor-server" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

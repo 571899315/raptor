@@ -1,9 +1,0 @@
-version '1.0-SNAPSHOT'
-
-dependencies {
-    compile project(':raptor-common')
-
-    provided 'org.slf4j:slf4j-api'
-    provided 'org.springframework:spring-context'
-    provided 'com.ecwid.consul:consul-api'
-}

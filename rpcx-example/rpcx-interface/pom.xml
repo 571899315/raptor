@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>com.raptor</groupId>
 			<artifactId>raptor-common</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
 

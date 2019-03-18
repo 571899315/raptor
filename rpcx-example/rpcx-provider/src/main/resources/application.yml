@@ -6,4 +6,4 @@ spring:
 rpc:
   server_ip: 10.110.1.235
   server_port: 8002
-  registry_address: 10.110.1.235:8500
+  registry_address: localhost:8500

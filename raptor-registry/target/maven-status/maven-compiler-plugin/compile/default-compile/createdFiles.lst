@@ -1,6 +1,0 @@
-com/raptor/registry/impl/consul/ConsulServiceDiscovery.class
-com/raptor/registry/RegisterContext.class
-com/raptor/registry/impl/consul/ConsulServiceRegistry.class
-com/raptor/registry/ServiceDiscovery.class
-com/raptor/registry/impl/consul/ConsulServiceDiscovery$ConsulRefresh.class
-com/raptor/registry/ServiceRegistry.class

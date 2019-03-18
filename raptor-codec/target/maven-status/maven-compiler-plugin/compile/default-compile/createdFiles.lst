@@ -1,4 +1,0 @@
-com/raptor/codec/coder/RPCEncoder.class
-com/raptor/codec/coder/RPCDecoder.class
-com/raptor/codec/serialization/impl/ProtobufSerializer.class
-com/raptor/codec/serialization/Serializer.class

@@ -1,2 +1,0 @@
-random=com.raptor.loadbalancer.loadbalance.RandomLoadBalance
-ribbon=com.raptor.loadbalancer.loadbalance.RoundRobinLoadBalance

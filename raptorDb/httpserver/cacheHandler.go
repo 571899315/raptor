@@ -8,7 +8,7 @@ import (
 )
 
 type cacheHandler struct {
-	server *Server
+	server *HttpServer
 }
 
 func (handler *cacheHandler) ServerHTTP(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +65,7 @@ func (handler *cacheHandler) ServerHTTP(w http.ResponseWriter, r *http.Request) 
 
 }
 
-func (s *Server) cacheHandler() http.Handler {
+func (s *HttpServer) cacheHandler() http.Handler {
 	return &cacheHandler{s}
 }
 

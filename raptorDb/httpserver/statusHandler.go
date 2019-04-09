@@ -7,7 +7,7 @@ import (
 )
 
 type statusHandler struct {
-	server *Server
+	server *HttpServer
 }
 
 func (handler *statusHandler) ServerHTTP(w http.ResponseWriter, r *http.Request) {
@@ -30,7 +30,7 @@ func (handler *statusHandler) ServerHTTP(w http.ResponseWriter, r *http.Request)
 
 }
 
-func (s *Server) statusHandler() http.Handler {
+func (s *HttpServer) statusHandler() http.Handler {
 	return &statusHandler{s}
 }
 

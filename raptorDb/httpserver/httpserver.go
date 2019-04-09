@@ -6,11 +6,11 @@ import (
 	"net/http"
 )
 
-type Server struct {
+type HttpServer struct {
 	cache cache.Cache
 }
 
-func (server *Server) Listen() {
+func (server *HttpServer) Listen() {
 
 	http.Handle("/cache/", server.cacheHandler())
 	http.Handle("/status/", server.statusHandler())
@@ -20,6 +20,6 @@ func (server *Server) Listen() {
 
 }
 
-func New(cache cache.Cache) *Server {
-	return &Server{cache}
+func New(cache cache.Cache) *HttpServer {
+	return &HttpServer{cache}
 }

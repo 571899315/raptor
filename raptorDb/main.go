@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/571899315/raptor/raptorDb/cache"
-	"github.com/571899315/raptor/raptorDb/server"
+	"github.com/571899315/raptor/raptorDb/httpserver"
 )
 
 func main() {
 	c := cache.New("inmemory")
-	server.New(c).Listen()
+	httpserver.New(c).Listen()
 }

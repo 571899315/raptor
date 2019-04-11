@@ -1,4 +1,4 @@
-package httpserver
+package http
 
 import (
 	"io/ioutil"
@@ -8,67 +8,52 @@ import (
 )
 
 type cacheHandler struct {
-	server *HttpServer
+	*Server
 }
 
-func (handler *cacheHandler) ServerHTTP(w http.ResponseWriter, r *http.Request) {
-
+func (h *cacheHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	key := strings.Split(r.URL.EscapedPath(), "/")[2]
-
 	if len(key) == 0 {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-
 	m := r.Method
-
 	if m == http.MethodPut {
 		b, _ := ioutil.ReadAll(r.Body)
-
 		if len(b) != 0 {
-			e := handler.server.cache.Set(key, b)
+			e := h.Set(key, b)
 			if e != nil {
-				log.Print(e)
+				log.Println(e)
 				w.WriteHeader(http.StatusInternalServerError)
 			}
-
 		}
 		return
 	}
-
 	if m == http.MethodGet {
-		b, e := handler.server.cache.Get(key)
+		b, e := h.Get(key)
 		if e != nil {
-			log.Print(e)
+			log.Println(e)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 		if len(b) == 0 {
 			w.WriteHeader(http.StatusNotFound)
 			return
-
 		}
 		w.Write(b)
-
+		return
 	}
-
 	if m == http.MethodDelete {
-		e := handler.server.cache.Del(key)
-
+		e := h.Del(key)
 		if e != nil {
-			log.Print(e)
+			log.Println(e)
 			w.WriteHeader(http.StatusInternalServerError)
-			return
 		}
+		return
 	}
 	w.WriteHeader(http.StatusMethodNotAllowed)
-
 }
 
-func (s *HttpServer) cacheHandler() http.Handler {
+func (s *Server) cacheHandler() http.Handler {
 	return &cacheHandler{s}
-}
-
-func (handler *cacheHandler) ServeHTTP(http.ResponseWriter, *http.Request) {
-	panic("implement me")
 }
